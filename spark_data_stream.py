@@ -91,7 +91,7 @@ if __name__ == "__main__":
                                        .format("kafka") \
                                        .option("kafka.bootstrap.servers", "192.168.178.194:9092") \
                                        .option("topic","results_vote_per_candidate_topic") \
-                                       .outputMode("update") \
+                                       .outputMode("complete") \
                                        .option("checkpointLocation" , "./checkpointdir1") \
                                        .start()
 
