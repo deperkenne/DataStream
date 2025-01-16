@@ -12,8 +12,8 @@ if __name__ == "__main__":
 
         spark =(SparkSession.builder
                  .appName("votes")
-                 .master("local[*]")  # L'IP de votre machine distante et le port du Spark Master
-                 #.config("kafka.bootstrap.servers", "192.168.178.194:9092")  # Kafka service name from docker-compose
+                 .master("local[*]")
+                 #.config("kafka.bootstrap.servers", "192.168.178.194:9092")
                  #.config("spark.sql.shuffle.partitions",3)
                  .config("spark.jars", "/opt/spark-apps/postgresql-42.7.3.jar")  # PostgreSQL driver
                  .config("spark.sql.adaptive.enabled", "false")  # Disable adaptive query execution
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
 
         # JDBC params connexion
-        url = "jdbc:postgresql://192.168.178.194:5433/demo_db"  # Exemple : jdbc:postgresql://localhost:5432/demo_db
+        url = "jdbc:postgresql://192.168.178.194:5432/db"  # Exemple : jdbc:postgresql://localhost:5432/demo_db
         properties = {
             "user": "root",
             "password": "root",
