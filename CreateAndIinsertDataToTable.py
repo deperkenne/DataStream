@@ -1,3 +1,5 @@
+import time
+
 import psycopg2
 import insertdatatotables
 from sparkstream.insertdatatotables import insert_voters_data_to_db, fetchall_voters_table_data
@@ -10,8 +12,8 @@ def connection_to_db():
     global cur
     try:
       conn = psycopg2.connect(host="192.168.178.194",
-            port="5433",
-            dbname="demo_db",
+            port="5432",
+            dbname="db",
             user="root",
             password="root"   )
       print("connection to database success")
@@ -84,12 +86,31 @@ def create_table_votes():
     conn.commit()
 
 
+def create_table_results_vote():
+    global conn
+    global cur
+
+    cur.execute("""
+            CREATE TABLE IF NOT EXISTS results_vote (
+                candidate_id VARCHAR(255) PRIMARY KEY,
+                candidate_name VARCHAR(255),
+                candidate_picture Text,
+                party_affiliation Text,
+                total_votes int
+               
+                
+            )
+        """)
+    conn.commit()
 
 
 
 if __name__ == "__main__":
   connection_to_db()
-  insertdatatotables.fetchall_votes(cur)
+  create_table_results_vote()
+
+
+
 
 
 
