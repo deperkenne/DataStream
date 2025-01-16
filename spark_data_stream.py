@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
 
 
-        # Data preprocessing: type casting and watermarking
+        # casting type and watermarking
         votes_df = consume_data(topic_name="votes_topic")
         votes_df = votes_df.withColumn('vote', col('vote').cast(IntegerType()))
         enriched_votes_df = votes_df.withWatermark("voting_time", "1 minute")
@@ -125,7 +125,7 @@ if __name__ == "__main__":
                 .format("console") \
                 .option("checkpointLocation","./checpoint_dir_kafka") \
                 .start()
-            query.awaitTermination
+            query.awaitTermination()
 
             print("send data success")
           except Exception as e:
@@ -139,7 +139,7 @@ if __name__ == "__main__":
         def show_data_consume():
             castDf = consume_data()
 
-            query =canditDf\
+            query =castDf\
                   .writeStream\
                   .outputMode("complete")\
                   .format("console") \
