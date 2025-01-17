@@ -187,7 +187,7 @@ def insert_voters_data_to_db(conn,cur):
     try:
           for i in range(30):
                 voter = generate_voter_data()
-                send_data_to_kafka("voters_topic",voter_id=voter["voter_id"],voter_name=["voter_name"])
+                #send_data_to_kafka("voters_topic",voter_id=voter["voter_id"],voter_name=["voter_name"])
 
                 cur.execute("""
                                        INSERT INTO voters (voter_id, voter_name, date_of_birth, gender, nationality, registration_number, address_street, address_city, address_state, address_country, address_postcode, email, phone_number, cell_number, picture, registered_age)
@@ -219,6 +219,15 @@ def insert_data_to_results_votes_table(cur,list_votes):
                        (vote["candidate_id"],vote["candidate_name"],vote["party_affiliation"],vote["candidate_picture"],vote["total_votes"])
 
       )
+
+def save_data_to_table_vote(cur,**kwargs):
+    cur.execute("""
+                  INSERT INTO results_vote(candidate_id,candidate_name, party_affiliation, candidate_picture, total_votes)
+                  VALUES (%s, %s, %s, %s)
+                """,
+                (kwargs["candidate_id"],kwargs["voter_id"], kwargs["voting_time"], kwargs["vote"]) )
+
+
 
 
 
