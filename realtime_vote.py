@@ -7,6 +7,10 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col,to_timestamp
 from pyspark.sql.functions import sum as _sum
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, Row
+import CreateAndIinsertDataToTable
+import insertdatatotables
+
+from sparkstream.CreateAndIinsertDataToTable import connection_to_db
 
 if __name__ == "__main__":
 
@@ -40,6 +44,7 @@ if __name__ == "__main__":
             "password": "root",
             "driver": "org.postgresql.Driver"
         }
+
         table_name_candidates = "candidates"
         table_name_voters = "voters"
         table_name_votes = "votes"
@@ -109,10 +114,12 @@ if __name__ == "__main__":
                 candidate_name = random_choice["candidate_name"]
                 voting_time = datetime.now()
                 voting_time_str = voting_time.isoformat()
-                send_data_to_Kafka_topic("votes_topic",vote=vote,voter_id=voter["voter_id"],candidate_id= random_choice["candidate_id"],candidate_name=random_choice["candidate_name"]                                          ,party_affiliation=random_choice["party_affiliation"],
-                                         candidate_picture=random_choice["photo_url"],vote_time=voting_time_str
-                                         ) # kafka storage
-                # insert_data_to_table_votes(voter["voter_id"],random_choice["candidate_id"],voting_time,vote)# db storage
+                # send_data_to_Kafka_topic("votes_topic",vote=vote,voter_id=voter["voter_id"],candidate_id= random_choice["candidate_id"],candidate_name=random_choice["candidate_name"]                                          ,party_affiliation=random_choice["party_affiliation"],
+                                         #candidate_picture=random_choice["photo_url"],vote_time=voting_time_str
+                                         #) # kafka storage
+
+                CreateAndIinsertDataToTable.connection_to_db()
+                insertdatatotables.save_data_to_table_vote(CreateAndIinsertDataToTable.cur,voter_id= voter["voter_id"],candidate_id=random_choice["candidate_id"],voting_time=voting_time,vote=vote)# db storage
 
 
                 time.sleep(5) 
