@@ -185,7 +185,7 @@ def generate_voter_data():
 def insert_voters_data_to_db(conn,cur):
     i = 0
     try:
-          for i in range(1000):
+          for i in range(30):
                 voter = generate_voter_data()
                 send_data_to_kafka("voters_topic",voter_id=voter["voter_id"],voter_name=["voter_name"])
 
@@ -234,8 +234,14 @@ def fetchall_voters_table_data(cur):
              SELECT *  from voters
              LIMIT 10
          """)
+    if len(list(cur.fetchall())) == 0:
+        print("no data")
     for voter in [voter for voter in cur.fetchall()]:
         print(voter)
+
+
+
+
 def fetchall_votes(cur):
     cur.execute("""
                 SELECT *  from votes

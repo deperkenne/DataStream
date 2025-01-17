@@ -2,7 +2,8 @@ import time
 
 import psycopg2
 import insertdatatotables
-from sparkstream.insertdatatotables import insert_voters_data_to_db, fetchall_voters_table_data
+from sparkstream.insertdatatotables import insert_voters_data_to_db, fetchall_voters_table_data, \
+    fetchall_candidates_table_data
 
 cur = None
 conn= None
@@ -107,7 +108,9 @@ def create_table_results_vote():
 
 if __name__ == "__main__":
   connection_to_db()
-  create_table_results_vote()
+  create_table_candidates()
+  insertdatatotables.insert_data_to_db(conn,cur)
+
 
 
 
