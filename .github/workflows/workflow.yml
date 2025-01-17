@@ -15,4 +15,4 @@
       steps:
         - uses: actions/checkout@v2
         - name: first-bash
-          run: bash ../../test.sh
+          run: bash ./test.sh
