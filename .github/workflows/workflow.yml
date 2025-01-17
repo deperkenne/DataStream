@@ -1,0 +1,19 @@
+ name: voting_app
+
+ on:
+    push:
+      branches:
+        - main
+    pull_request:
+      branches:
+        - main
+    workflow_dispatch:
+
+ jobs:
+    os_system:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: first-bash
+          run: ../test.sh
+          shell: bash
