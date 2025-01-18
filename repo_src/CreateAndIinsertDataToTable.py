@@ -1,5 +1,5 @@
 import psycopg2
-from sparkstream.src.insertdatatotables import fetchall_votes
+from sparkstream.repo_src.insertdatatotables import fetchall_votes
 
 cur = None
 conn= None

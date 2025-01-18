@@ -5,6 +5,7 @@ from kafka import KafkaProducer
 import json
 
 
+
 # establish connection to Kafka
 def Kafka_connection():
       return  KafkaProducer(

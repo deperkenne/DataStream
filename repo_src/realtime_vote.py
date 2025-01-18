@@ -5,7 +5,7 @@ from datetime import datetime
 from kafka import KafkaProducer
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, Row
-from sparkstream.src import CreateAndIinsertDataToTable, insertdatatotables
+from sparkstream.repo_src import CreateAndIinsertDataToTable, insertdatatotables
 
 if __name__ == "__main__":
 

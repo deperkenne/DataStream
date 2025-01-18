@@ -1,7 +1,7 @@
 import requests
 import random
 import time
-from sparkstream.src import insertDataToKafkaTopic
+from sparkstream.repo_src import insertDataToKafkaTopic
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
 PARTIES = ["Management Party", "Savior Party", "Tech Republic Party"]
@@ -18,7 +18,7 @@ def send_data_to_kafka(topic_data,**kwargs):
     insertDataToKafkaTopic.send_data_to_Kafka_topic(topic_data, kwargs)
 
 
-def get_data():
+def get_data(base_url):
     """
     Fetch data from an API and build a list containing exactly two male candidates
     and one female candidate. Each candidate is unique, determined by their unique ID.
@@ -39,10 +39,11 @@ def get_data():
             time.sleep(random_time)
 
             # Send a GET request to the API
-            response = requests.get(BASE_URL)
+            response = requests.get(base_url)
 
             # Check if the API responded successfully
             if response.status_code == 200:
+
                 # Parse the candidate data from the API response
                 candidate_data = response.json()["results"][0]
                 gender = candidate_data["gender"]
@@ -102,7 +103,7 @@ def insert_data_to_db(conn, cur):
     The database insertion is committed after each candidate is added.
     """
     i = 0  # Index to keep track of the candidate's party affiliation from the PARTIES list
-    candidates_data = get_data()
+    candidates_data = get_data(BASE_URL)
     try:
             # Iterate over the candidate data retrieved from the API
             for candidate in candidates_data:
