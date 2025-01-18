@@ -1,7 +1,7 @@
 import pytest
 from sqlalchemy.testing.plugin.plugin_base import assertions
 
-from sparkstream.repo_voting.insertdatatotables import *
+from repo_voting.insertdatatotables import *
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
 
