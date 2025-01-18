@@ -1,9 +1,7 @@
 import requests
-from py4j.compat import items
 import random
 import time
-import insertDataToKafkaTopic
-
+from sparkstream.src import insertDataToKafkaTopic
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
 PARTIES = ["Management Party", "Savior Party", "Tech Republic Party"]
@@ -17,7 +15,7 @@ cursor = None
 
 
 def send_data_to_kafka(topic_data,**kwargs):
-    insertDataToKafkaTopic.send_data_to_Kafka_topic(topic_data,kwargs)
+    insertDataToKafkaTopic.send_data_to_Kafka_topic(topic_data, kwargs)
 
 
 def get_data():

@@ -1,9 +1,5 @@
-import time
-
 import psycopg2
-import insertdatatotables
-from sparkstream.insertdatatotables import insert_voters_data_to_db, fetchall_voters_table_data, \
-    fetchall_candidates_table_data, insert_data_to_db, fetchall_votes
+from sparkstream.src.insertdatatotables import fetchall_votes
 
 cur = None
 conn= None

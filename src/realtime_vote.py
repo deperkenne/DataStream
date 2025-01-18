@@ -4,13 +4,8 @@ import time
 from datetime import datetime
 from kafka import KafkaProducer
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import from_json, col,to_timestamp
-from pyspark.sql.functions import sum as _sum
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, Row
-import CreateAndIinsertDataToTable
-import insertdatatotables
-
-from sparkstream.CreateAndIinsertDataToTable import connection_to_db
+from sparkstream.src import CreateAndIinsertDataToTable, insertdatatotables
 
 if __name__ == "__main__":
 
@@ -119,7 +114,7 @@ if __name__ == "__main__":
                                          #) # kafka storage
 
                 CreateAndIinsertDataToTable.connection_to_db()
-                insertdatatotables.save_data_to_table_vote(CreateAndIinsertDataToTable.cur,voter_id= voter["voter_id"],candidate_id=random_choice["candidate_id"],voting_time=voting_time,vote=vote)# db storage
+                insertdatatotables.save_data_to_table_vote(CreateAndIinsertDataToTable.cur, voter_id= voter["voter_id"], candidate_id=random_choice["candidate_id"], voting_time=voting_time, vote=vote)# db storage
 
 
                 time.sleep(5) 
