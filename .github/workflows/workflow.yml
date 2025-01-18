@@ -44,8 +44,8 @@
             pip install -r requirements.txt   # Install dependencies belong  requirements.txt
         - name : copy code src
           run: |
-            cd ../sparkstream
-            cp -r . ./my_repo
+            cp  repo_voting ./my_repo
+            cp tests ./my_repo
         - name : run test with pytest
           run: |
              pytest 
