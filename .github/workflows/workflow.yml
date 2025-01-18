@@ -20,14 +20,14 @@
         - name : Set up Python
           uses: actions/setup-python@v2
           with:
-            python-version: '3.11'
+            python-version: '3.10'
 
         - name: Install dependencies
           run: |
             python -m pip install --upgrade pip  # update pip 
             pip install -r requirements.txt   # Install dependencies belong  requirements.txt
     test:
-      runs-on: ubuntu-latest  # Utilise un environnement Ubuntu
+      runs-on: ubuntu-24.04 
       #needs: build # this code depends on job build
       steps:
         - name: Check out code
@@ -36,7 +36,7 @@
         - name: Set up Python
           uses: actions/setup-python@v2
           with:
-           python-version: '3.11'
+           python-version: '3.10'
 
         - name: install dependencies
           run: |
@@ -44,8 +44,8 @@
             pip install -r requirements.txt   # Install dependencies belong  requirements.txt
         - name : copy code src
           run: |
-            cp  repo_voting ./my_repo
-            cp tests ./my_repo
+            cp -r repo_voting ./my_repo
+            cp -r tests ./my_repo
         - name : run test with pytest
           run: |
              pytest 
