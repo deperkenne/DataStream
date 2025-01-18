@@ -1,7 +1,7 @@
 import requests
 import random
 import time
-from sparkstream.repo_src import insertDataToKafkaTopic
+from sparkstream.repo_voting import insertDataToKafkaTopic
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
 PARTIES = ["Management Party", "Savior Party", "Tech Republic Party"]
