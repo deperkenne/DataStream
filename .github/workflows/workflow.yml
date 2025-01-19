@@ -61,7 +61,7 @@
            path: ./downloaded_files
         - name : copy code src
           run: |
-            ls -al
+            ls -al downloaded_files
             cd voting_app_repo
         - name: run python files
           run: |
