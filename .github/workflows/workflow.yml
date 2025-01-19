@@ -61,7 +61,8 @@
            path: ./downloaded_files
         - name : copy code src
           run: |
-            cd downloaded_files/voting_app_repo
+            ls -al
+            cd voting_app_repo
         - name: run python files
           run: |
             python -m CreateAndIinsertDataToTable.py
