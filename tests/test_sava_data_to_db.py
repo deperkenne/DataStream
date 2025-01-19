@@ -1,6 +1,6 @@
 import pytest
 
-from insertdatatotables import get_data
+from .insertdatatotables import get_data
 
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
