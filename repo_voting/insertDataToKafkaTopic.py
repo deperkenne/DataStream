@@ -1,6 +1,5 @@
 
 import time
-import tweepy
 from kafka import KafkaProducer
 import json
 
