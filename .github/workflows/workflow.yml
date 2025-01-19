@@ -26,9 +26,17 @@
           run: |
             python -m pip install --upgrade pip  # update pip 
             pip install -r requirements.txt   # Install dependencies belong  requirements.txt
+        - name: create repo and downloads files in this repo
+          run: |
+             mkdir voting_app_repo
+             cp -r repo_voting voting_app_repo
+             cd voting_app_repo/repo_voting
+        - name: run file 
+          run: |
+             python CreateAndlinsertDataToTable.py
     test:
       runs-on: ubuntu-24.04 
-      #needs: build # this code depends on job build
+      needs: build # this code depends on job build
       steps:
         - name: Check out code
           uses: actions/checkout@v2
@@ -37,14 +45,14 @@
           uses: actions/setup-python@v2
           with:
            python-version: '3.10'
-
+        
         - name: install dependencies
           run: |
             python -m pip install --upgrade pip  # update pip 
             pip install -r requirements.txt   # Install dependencies belong  requirements.txt
         - name : copy code src
           run: |
-            cp -r repo_voting ./my_repo
+            cp -r voting_app_repo ./my_repo_test
         - name : run test with pytest
           run: |
              pytest 
