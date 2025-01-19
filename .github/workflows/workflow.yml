@@ -30,12 +30,10 @@
           run: |
              mkdir voting_app_repo
              cp -r repo_voting voting_app_repo
+             ls -al voting_app_repo/repo_voting
              cd voting_app_repo
-             ls -al
              cd repo_voting
-        - name: run file 
-          run: |
-             python CreateAndlinsertDataToTable.py
+      
     test:
       runs-on: ubuntu-24.04 
       needs: build # this code depends on job build
