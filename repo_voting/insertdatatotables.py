@@ -1,7 +1,7 @@
 import requests
 import random
 import time
-from sparkstream.repo_voting import insertDataToKafkaTopic
+from  insertDataToKafkaTopic import send_data_to_Kafka_topic
 
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
@@ -16,7 +16,7 @@ cursor = None
 
 
 def send_data_to_kafka(topic_data,**kwargs):
-    insertDataToKafkaTopic.send_data_to_Kafka_topic(topic_data, kwargs)
+    send_data_to_Kafka_topic(topic_data, kwargs)
 
 
 def get_data(base_url):
