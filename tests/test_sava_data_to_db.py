@@ -1,7 +1,7 @@
 import pytest
-from sqlalchemy.testing.plugin.plugin_base import assertions
 
-from repo_voting.insertdatatotables import *
+from insertdatatotables import get_data
+
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
 
