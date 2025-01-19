@@ -44,7 +44,7 @@
             pip install -r requirements.txt   # Install dependencies belong  requirements.txt
         - name : copy code src
           run: |
-            cp -r tests ./my_repo
+            cp -r repo_voting ./my_repo
         - name : run test with pytest
           run: |
              pytest 
