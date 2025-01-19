@@ -1,6 +1,6 @@
 import pytest
 
-from insertdatatotables import get_data
+from .insertdatatotables import get_data
 
 
 

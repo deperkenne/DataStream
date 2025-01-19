@@ -1,7 +1,7 @@
 import requests
 import random
 import time
-from  insertDataToKafkaTopic import send_data_to_Kafka_topic
+from  .insertDataToKafkaTopic import send_data_to_Kafka_topic
 
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
