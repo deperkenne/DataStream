@@ -30,7 +30,9 @@
           run: |
              mkdir voting_app_repo
              cp -r repo_voting voting_app_repo
-             cd voting_app_repo/repo_voting
+             cd voting_app_repo
+             ls -al
+             cd repo_voting
         - name: run file 
           run: |
              python CreateAndlinsertDataToTable.py
