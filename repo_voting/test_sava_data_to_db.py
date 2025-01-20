@@ -16,7 +16,6 @@ BASE_URL_NOT_EXIST = 'https://randomuser.'
 @pytest.mark.parametrize("url,expected_list", [
     (BASE_URL,["male","male","female"] ),
     (BASE_URL, ["male", "male", "female"] ),
-    (BASE_URL, ["male", "male", "female"] ),
 ])
 def test_return_correctly_list_of_candidates(url,expected_list):
     # given

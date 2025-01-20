@@ -10,45 +10,33 @@
     workflow_dispatch:
 
  jobs:
-    build:
-      runs-on: ubuntu-24.04
-      steps:
-        - uses: actions/checkout@v2
-        - name: first-bash
-          run: bash ./test.sh
+    sshconnection:
+           runs-on: ubuntu-24.04 
+           steps:
+               - name: Check out code
+                 uses: actions/checkout@v2
+                  
+               - name: show route table
+                 run:  ip route show    
+               - name: SSH into remote server
+                 uses: appleboy/ssh-action@v0.1.8         
+                 with:
+                   host: ${{secrets.HOST}}          
+                   username: ${{secrets.USERNAME}}          
+                   port: ${{secrets.PORT}}   
+                   password: ${{secrets.PASSWORD}}   
+              
 
-        - name : Set up Python
-          uses: actions/setup-python@v2
-          with:
-            python-version: '3.10'
-
-        - name: Install dependencies
-          run: |
-            python -m pip install --upgrade pip  # update pip 
-            pip install -r requirements.txt   # Install dependencies belong  requirements.txt
-    test:
-      runs-on: ubuntu-24.04 
-      #needs: build # this code depends on job build
-      steps:
-        - name: Check out code
-          uses: actions/checkout@v2
-
-        - name: Set up Python
-          uses: actions/setup-python@v2
-          with:
-           python-version: '3.10'
-
-        - name: install dependencies
-          run: |
-            python -m pip install --upgrade pip  # update pip 
-            pip install -r requirements.txt   # Install dependencies belong  requirements.txt
-        - name : copy code src
-          run: |
-            cp -r repo_voting ./my_repo
-        - name : run test with pytest
-          run: |
-             pytest 
+             
+                           
+           
+           
+         
             
+     
+    
+ 
+           
               
 
             
