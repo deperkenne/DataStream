@@ -63,13 +63,7 @@
            runs-on: ubuntu-24.04 
            steps:
                - name: Check out code
-                 uses: actions/setup-python@v2
-
-               - name: Installer Docker
-                 run: |
-                     sudo apt-get update
-                     sudo apt-get install -y docker.io
-
+                 uses: actions/checkout@v2
                - name: Démarrer Docker
                  run: |
                   sudo systemctl start docker
