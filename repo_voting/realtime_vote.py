@@ -9,10 +9,11 @@ from sparkstream.repo_voting import CreateAndIinsertDataToTable, insertdatatotab
 
 if __name__ == "__main__":
 
+
         spark =(SparkSession.builder
                  .appName("votes")
-                 .master("local[*]")
-                 #.config("kafka.bootstrap.servers", "192.168.178.194:9092")
+                 .master("local[*]")  # L'IP de votre machine distante et le port du Spark Master
+                 #.config("kafka.bootstrap.servers", "192.168.178.194:9092")  # Kafka service name from docker-compose
                  #.config("spark.sql.shuffle.partitions",3)
                  .config("spark.jars", "/opt/spark-apps/postgresql-42.7.3.jar")  # PostgreSQL driver
                  .config("spark.sql.adaptive.enabled", "false")  # Disable adaptive query execution
@@ -30,6 +31,17 @@ if __name__ == "__main__":
 
 
 
+        cur = None
+        conn= None
+
+
+        conn = psycopg2.connect(host="192.168.178.194",
+             port="5432",
+             dbname="db",
+             user="root",
+             password="root"   )
+        print("connection to database success")
+        cur = conn.cursor()
 
 
         # JDBC params connexion
@@ -39,7 +51,6 @@ if __name__ == "__main__":
             "password": "root",
             "driver": "org.postgresql.Driver"
         }
-
         table_name_candidates = "candidates"
         table_name_voters = "voters"
         table_name_votes = "votes"
@@ -64,7 +75,7 @@ if __name__ == "__main__":
                 df.write.jdbc(url=url, table=table_name, properties=properties)
             except Exception as e:
                 print(e)
-    
+
 
 
         # establish connection to Kafka
@@ -105,24 +116,20 @@ if __name__ == "__main__":
             voters_data = get_data_from_db(url,table_name_voters,properties).collect()
 
             for voter in voters_data:
-                random_choice = random.choice(candidates_data)
-                candidate_name = random_choice["candidate_name"]
-                voting_time = datetime.now()
-                voting_time_str = voting_time.isoformat()
-                # send_data_to_Kafka_topic("votes_topic",vote=vote,voter_id=voter["voter_id"],candidate_id= random_choice["candidate_id"],candidate_name=random_choice["candidate_name"]                                          ,party_affiliation=random_choice["party_affiliation"],
-                                         #candidate_picture=random_choice["photo_url"],vote_time=voting_time_str
-                                         #) # kafka storage
+                 random_choice = random.choice(candidates_data)
+                 candidate_name = random_choice["candidate_name"]
+                 voting_time = datetime.now()
+                 voting_time_str = voting_time.isoformat()
 
-                CreateAndIinsertDataToTable.connection_to_db()
-                insertdatatotables.save_data_to_table_vote(CreateAndIinsertDataToTable.cur, voter_id= voter["voter_id"], candidate_id=random_choice["candidate_id"], voting_time=voting_time, vote=vote)# db storage
-
-
-                time.sleep(5) 
+                  send_data_to_Kafka_topic("votes_topic",vote=vote,voter_id=voter["voter_id"],candidate_id= random_choice["candidate_id"],candidate_name=random_choice["candidate_name"],party_affiliation=random_choice["party_affiliation"],
+                                         candidate_picture=random_choice["photo_url"],vote_time=voting_time_str) # kafka storage
+                
+                 insertdatatotables.save_data_to_table_vote(conn,cur,voter_id= voter["voter_id"],candidate_id=random_choice["candidate_id"],voting_time=voting_time,vote=vote)# db storage
 
 
+                 time.sleep(5)
+
+        
         # call function
         choice_candidate()
-                
-
-
                 
