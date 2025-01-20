@@ -85,7 +85,8 @@
        with:
           host:  ${{secrets.HOSTNAME}}        
           username: ${{secrets.USERNAME}}                 
-          password: ${{secrets.PASSWORD}}  
+          password: ${{secrets.PASSWORD}} 
+          port: ${{secrets.PORT}} 
      
     
  
