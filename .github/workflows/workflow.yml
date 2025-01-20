@@ -30,12 +30,7 @@
           run: |
              mkdir voting_app_repo
              cp -r repo_voting voting_app_repo
-             ls -al voting_app_repo/repo_voting
-
-        - name: Run traceroute to 192.168.178.194
-          run: traceroute 192.168.178.194
-            
-             
+             ls -al voting_app_repo/repo_voting    
         - name: Upload files as artifact
           uses: actions/upload-artifact@v3
           with:
@@ -70,11 +65,7 @@
                - name: Check out code
                  uses: actions/setup-python@v2
                - name: show route table
-                 run:  ip route show     
-               - name: Install traceroute
-                 run: sudo apt-get update && sudo apt-get install -y traceroute
-               - name: Run traceroute to 192.168.178.194
-                 run: traceroute 192.168.178.194
+                 run:  ip route show    
                - name: SSH into remote server
                  uses: appleboy/ssh-action@v0.1.8         
                  with:
