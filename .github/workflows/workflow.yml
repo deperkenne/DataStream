@@ -70,7 +70,7 @@
                   cp docker-dev-spark-compose.yml ./kafkadir
                   cd kafkadir
                   sudo systemctl start docker
-                  docker compose -f docker-dev-spark-compose.yml
+                  docker compose -f docker-dev-spark-compose.yml up -d
                   
                - name: show route table
                  run:  ip route show    
