@@ -63,9 +63,10 @@
           run: |
             ls -al downloaded_files
             cd repo_voting
+            ls -al
         - name: run python files
           run: |
-            python -m CreateAndIinsertDataToTable
+            python  CreateAndIinsertDataToTable.py
         - name : run test with pytest
           run: |
              pytest 
