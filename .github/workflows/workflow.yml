@@ -31,11 +31,6 @@
              mkdir voting_app_repo
              cp -r repo_voting voting_app_repo
              ls -al voting_app_repo/repo_voting
-        - name: give all ip addrese
-          run: |
-             ip a
-        - name: Install traceroute
-          run: sudo apt-get update && sudo apt-get install -y traceroute
 
         - name: Run traceroute to 192.168.178.194
           run: traceroute 192.168.178.194
@@ -47,7 +42,54 @@
            name: shared-files
            path: voting_app_repo
       
-  
+    test:
+      runs-on: ubuntu-24.04 
+      needs: build # this code depends on job build
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v2
+
+        - name: Set up Python
+          uses: actions/setup-python@v2
+          with:
+           python-version: '3.10'
+
+        - name: install dependencies
+          run: |
+            python -m pip install --upgrade pip  # update pip 
+            pip install -r requirements.txt   # Install dependencies belong  requirements.txt
+        - name : copy code src
+          run: |
+            cp -r repo_voting ./my_repo
+        - name : run test with pytest
+          run: |
+             pytest 
+    sshconnection:
+           runs-on: ubuntu-24.04 
+           steps:
+               - name: Check out code
+                 uses: actions/setup-python@v2
+               - name: show route table
+                 run:  ip route show     
+               - name: Install traceroute
+                 run: sudo apt-get update && sudo apt-get install -y traceroute
+               - name: Run traceroute to 192.168.178.194
+                 run: traceroute 192.168.178.194
+               - name: SSH into remote server
+                 uses: appleboy/ssh-action@v0.1.8         
+                 with:
+                   host: ${{secrets.HOST}}          
+                   username: ${{secrets.USERNAME}}          
+                   port: ${{secrets.PORT}}   
+                   password: ${{secrets.PASSWORD}}   
+              
+
+             
+                           
+           
+           
+         
+            
      
     
  
