@@ -61,12 +61,16 @@ If you are running Kafka and PostgreSQL in a virtual machine (VM), you need to r
 
 For example, if your VM IP address is 192.168.178.100, Kafka will be accessible at 192.168.178.100:9092, and PostgreSQL will be accessible at 192.168.178.100:5432.
 
+### git action for CI/CD
+To automate the testing and deployment of your application, you can use GitHub Actions. Below is an example of a GitHub Actions workflow configuration to ensure the application works as expected.
+You can modify this workflow.yml file according to your specific needs or the stack you're using. For instance, I have configured it to work with an Ubuntu server that I deployed in my virtual machine (VM). If you use a different server or stack, you can adjust the setup steps accordingly.
 
 ### Tech Stack Used
 - Data injection: API, Kafka
 - Processing & Analysis: Python (Pandas, apache spark and sparkStreaming)
 - Data Storage: Kafka,PostgresSQL
 - Visualization: Power BI
+- CI/CD: git action
 
 
 ## Screenshots
