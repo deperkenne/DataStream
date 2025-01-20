@@ -73,11 +73,11 @@ For example, if your VM IP address is 192.168.178.100, Kafka will be accessible 
 ### Candidates and Parties information
 ![candidates_and_party.png](images/candidates_and_party.png)
 ### Voters
-![voters.png](images%2Fvoters.png)
+![voters.png](image%2Fvoters.png)
 
 ### Voting
 ![voting.png](images%2Fvoting.png)
 
 ### Dashboard
-![dashboard.png](images%2Fdashboard.png)
+![dashboard.png](image%2Fdashboard.png)
 
