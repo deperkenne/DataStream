@@ -86,7 +86,7 @@
           host:  ${{ hostname }}        
           username: ${{ username }}                 
           password: ${{ password }}  
-     # Étape 3 : Ajouter l'hôte à "known_hosts"
+     
     
  
            
