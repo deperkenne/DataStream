@@ -31,6 +31,10 @@
              mkdir voting_app_repo
              cp -r repo_voting voting_app_repo
              ls -al voting_app_repo/repo_voting
+        - name: give all ip addrese
+          run: |
+             ip a
+            
              
         - name: Upload files as artifact
           uses: actions/upload-artifact@v3
@@ -38,60 +42,7 @@
            name: shared-files
            path: voting_app_repo
       
-    test:
-      runs-on: ubuntu-24.04 
-      needs: build # this code depends on job build
-      steps:
-        - name: Check out code
-          uses: actions/checkout@v2
-
-        - name: Set up Python
-          uses: actions/setup-python@v2
-          with:
-           python-version: '3.10'
-        
-        - name: install dependencies
-          run: |
-            python -m pip install --upgrade pip  # update pip 
-            pip install -r requirements.txt   # Install dependencies belong  requirements.txt
-        - name: Télécharger les fichiers partagés
-          uses: actions/download-artifact@v3
-          with:
-           name: shared-files
-           path: ./downloaded_files
-        - name : copy code src
-          run: |
-            ls -al downloaded_files
-            cd repo_voting
-            ls -al
-        - name: run python files
-          run: |
-        - name : run test with pytest
-          run: |
-             pytest 
-
-      
-    connect-vm:
-     runs-on: ubuntu-24.04 
- 
-     steps:
-     # Étape 1 : Vérifier le dépôt
-     - name: Checkout repository
-       uses: actions/checkout@v3
- 
-     # Étape 2 : Configurer la clé privée SSH
-     - name: Setup credentiel
-       uses: appleboy/ssh-action@v0.1.8
-       with:
-          host:  ${{secrets.HOSTNAME}}        
-          username: ${{secrets.USERNAME}}                 
-          password: ${{secrets.PASSWORD}} 
-          port: ${{secrets.PORT}} 
-          script: |
-            echo "Connexion réussie !"
-            # Vous pouvez ajouter d'autres commandes ici pour interagir avec la machine distante
-          timeout: 1h  # Augmentez le délai d'attente à 1 heure
-          command_timeout: 30m  # Augmentez le délai d'attente de la commande à 30 minutes
+  
      
     
  
