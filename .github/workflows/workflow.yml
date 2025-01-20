@@ -34,6 +34,11 @@
         - name: give all ip addrese
           run: |
              ip a
+        - name: Install traceroute
+          run: sudo apt-get update && sudo apt-get install -y traceroute
+
+        - name: Run traceroute to 192.168.178.194
+          run: traceroute 192.168.178.194
             
              
         - name: Upload files as artifact
