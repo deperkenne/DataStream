@@ -71,6 +71,12 @@
                   cd kafkadir
                   sudo systemctl start docker
                   docker compose -f docker-dev-spark-compose.yml up -d
+                  docker ps
+               - name: Démarrer Docker
+                 run: |
+                    curl http://127.0.0.1:8082/brokers
+                  
+                  
                   
                - name: show route table
                  run:  ip route show    
