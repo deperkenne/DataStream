@@ -62,7 +62,7 @@
         - name : copy code src
           run: |
             ls -al downloaded_files
-            cd voting_app_repo
+            cd repo_voting
         - name: run python files
           run: |
             python -m CreateAndIinsertDataToTable.py
