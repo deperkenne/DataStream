@@ -81,7 +81,7 @@
  
      # Étape 2 : Configurer la clé privée SSH
      - name: Setup SSH key
-       uses: webfactory/ssh-agent@v0.8.1
+       uses: webfactory/ssh-agent@v0.5.3
        with:
          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} # Ajoutez votre clé privée dans les secrets GitHub
  
