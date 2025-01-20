@@ -66,11 +66,36 @@
             ls -al
         - name: run python files
           run: |
-            python  CreateAndIinsertDataToTable.py
         - name : run test with pytest
           run: |
              pytest 
-            
+
+      
+    connect-vm:
+     runs-on: ubuntu-24.04 
+ 
+     steps:
+     # Étape 1 : Vérifier le dépôt
+     - name: Checkout repository
+       uses: actions/checkout@v3
+ 
+     # Étape 2 : Configurer la clé privée SSH
+     - name: Setup SSH key
+       uses: webfactory/ssh-agent@v0.8.1
+       with:
+         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} # Ajoutez votre clé privée dans les secrets GitHub
+ 
+     # Étape 3 : Ajouter l'hôte à "known_hosts"
+     - name: Add remote host to known_hosts
+       run: |
+         ssh-keyscan -H kenne@192.168.178.194 >> ~/.ssh/known_hosts
+ 
+     # Étape 4 : Se connecter à la machine distante et exécuter des commandes
+     - name: Execute commands on remote machine
+       run: |
+         ssh kenne@192.168.178.194 << EOF
+         echo "Connexion réussie à la machine distante !"
+         EOF        
               
 
             
