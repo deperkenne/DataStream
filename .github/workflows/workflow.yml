@@ -87,6 +87,11 @@
           username: ${{secrets.USERNAME}}                 
           password: ${{secrets.PASSWORD}} 
           port: ${{secrets.PORT}} 
+          script: |
+            echo "Connexion réussie !"
+            # Vous pouvez ajouter d'autres commandes ici pour interagir avec la machine distante
+          timeout: 1h  # Augmentez le délai d'attente à 1 heure
+          command_timeout: 30m  # Augmentez le délai d'attente de la commande à 30 minutes
      
     
  
