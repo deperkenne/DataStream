@@ -28,16 +28,13 @@ def get_data(base_url):
         list: A list of 3 candidate dictionaries (2 males and 1 female).
     """
     candidate_id_list = {}  # Dictionary to track already fetched candidate IDs
-    candidate_id = ""  # Temporary variable to construct candidate IDs
     final_candidates = []  # List to store the final selection of candidates
 
 
 
-    while True:
-        try:
-            # Pause for a random amount of time to avoid hitting the API rate limit
-            random_time = random.randint(5, 8)
-            time.sleep(random_time)
+
+    try:
+        while True:
 
             # Send a GET request to the API
             response = requests.get(base_url)
@@ -81,12 +78,12 @@ def get_data(base_url):
                         if gender == "female":
                             continue
                         final_candidates.append(candidate_data)
-
-        except Exception as e:
-            # Handle errors during API requests or other operations
-            print("Error with BASE_URL:", str(e))
-
-    return final_candidates
+    except Exception as e:
+        # Handle errors during API requests or other operations
+        print( e.args)
+        raise
+    else:
+        return final_candidates
 
 
 def insert_data_to_db(conn, cur):
