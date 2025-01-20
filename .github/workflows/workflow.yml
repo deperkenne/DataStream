@@ -15,17 +15,6 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               - name: Démarrer Docker
-                 run: |
-                  mkdir kafkadir
-                  cp docker-dev-spark-compose.yml ./kafkadir
-                  cd kafkadir
-                  sudo systemctl start docker
-                  docker compose -f docker-dev-spark-compose.yml up -d
-                  docker logs zookeeper-1
-               - name: Démarrer Docker
-                 run: |
-                    curl http://127.0.0.1:8086/brokers
                   
                - name: show route table
                  run:  ip route show    
