@@ -81,21 +81,15 @@
  
      # Étape 2 : Configurer la clé privée SSH
      - name: Setup SSH key
-       uses: webfactory/ssh-agent@v0.5.3
+       uses: webfactory/ssh-action@v0.5.3
        with:
-         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} # Ajoutez votre clé privée dans les secrets GitHub
- 
+          host:  ${{ hostname }}        
+          username: ${{ username }}                 
+          password: ${{ password }}  
      # Étape 3 : Ajouter l'hôte à "known_hosts"
-     - name: Add remote host to known_hosts
-       run: |
-         ssh-keyscan -H kenne@192.168.178.194 >> ~/.ssh/known_hosts
+    
  
-     # Étape 4 : Se connecter à la machine distante et exécuter des commandes
-     - name: Execute commands on remote machine
-       run: |
-         ssh kenne@192.168.178.194 << EOF
-         echo "Connexion réussie à la machine distante !"
-         EOF        
+           
               
 
             
