@@ -65,7 +65,7 @@
             cd repo_voting
         - name: run python files
           run: |
-            python -m CreateAndIinsertDataToTable.py
+            python -m CreateAndIinsertDataToTable
         - name : run test with pytest
           run: |
              pytest 
