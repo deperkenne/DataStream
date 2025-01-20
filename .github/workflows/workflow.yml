@@ -64,6 +64,16 @@
            steps:
                - name: Check out code
                  uses: actions/setup-python@v2
+
+               - name: Installer Docker
+                 run: |
+                     sudo apt-get update
+                     sudo apt-get install -y docker.io
+
+               - name: Démarrer Docker
+                 run: |
+                  sudo systemctl start docker
+                  docker ps
                - name: show route table
                  run:  ip route show    
                - name: SSH into remote server
