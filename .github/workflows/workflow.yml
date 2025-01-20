@@ -74,7 +74,7 @@
                   docker ps
                - name: Démarrer Docker
                  run: |
-                    curl http://localhost:8082/brokers
+                    curl http://localhost:8086/brokers
                   
                   
                   
