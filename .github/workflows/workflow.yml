@@ -80,8 +80,8 @@
        uses: actions/checkout@v3
  
      # Étape 2 : Configurer la clé privée SSH
-     - name: Setup SSH key
-       uses: webfactory/ssh-action@v0.5.3
+     - name: Setup credentiel
+       uses: appleboy/ssh-action@v0.1.8
        with:
           host:  ${{ hostname }}        
           username: ${{ username }}                 
