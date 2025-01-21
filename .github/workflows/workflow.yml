@@ -65,20 +65,8 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               - name: Démarrer Docker
-                 run: |
-                  mkdir kafkadir
-                  cp docker-dev-spark-compose.yml ./kafkadir
-                  cd kafkadir
-                  sudo systemctl start docker
-                  docker compose -f docker-dev-spark-compose.yml up -d
-                  docker ps
-               - name: Démarrer Docker
-                 run: |
-                    curl http://127.0.0.1:8082/brokers
-
-               - name: show route table
-                 run:  ip route show
+               - name: show firewall
+                 run:  sudo ufw status
                - name: SSH into remote server
                  uses: appleboy/ssh-action@v0.1.8
                  with:
