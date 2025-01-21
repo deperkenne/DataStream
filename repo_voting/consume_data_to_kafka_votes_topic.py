@@ -11,7 +11,7 @@ logger = logging.getLogger("KafkaConsumer")
 
 # consumer configuration
 consumer = KafkaConsumer(
-    "results_vote_per_candidate_topic",
+    "results_vote_topic",
     bootstrap_servers=["192.168.178.194:9092"],
     group_id=None,  # no consume group
     auto_offset_reset="earliest",
@@ -32,7 +32,8 @@ def consume_data():
                 msg = consumer.poll(20)  # time in Second  to poll all message
                 time.sleep(3)
                 if len(msg) == 0:
-                    print("wait a message")
+                    pass
+                    #print("wait a message")
                 if msg is None:
                     logger.info("error during  poll message")
                     break
@@ -40,7 +41,7 @@ def consume_data():
                 else:
                     for message in msg.values():
                        results_vote_dict = message[0][6]
-                       print(results_vote_dict["candidate_name"], results_vote_dict["candidate_picture"],results_vote_dict["vote"], sep=" ")
+                       print("candidate:" + results_vote_dict["candidate_name"],";", "numbers of votes realtime:"+str(results_vote_dict["total_votes"]), sep=" ")
 
 
         except Exception as e:

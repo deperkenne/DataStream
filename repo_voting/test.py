@@ -4,7 +4,7 @@ import pytest
 import requests
 import psycopg2
 from unittest import mock
-from .insertdatatotables import get_data
+from insertdatatotables import get_data
 
 
 

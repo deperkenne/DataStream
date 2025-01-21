@@ -2,6 +2,8 @@ import json
 import random
 import time
 from datetime import datetime
+
+import psycopg2
 from kafka import KafkaProducer
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, Row
@@ -121,7 +123,7 @@ if __name__ == "__main__":
                  voting_time = datetime.now()
                  voting_time_str = voting_time.isoformat()
 
-                  send_data_to_Kafka_topic("votes_topic",vote=vote,voter_id=voter["voter_id"],candidate_id= random_choice["candidate_id"],candidate_name=random_choice["candidate_name"],party_affiliation=random_choice["party_affiliation"],
+                 send_data_to_Kafka_topic("votes_topic",vote=vote,voter_id=voter["voter_id"],candidate_id= random_choice["candidate_id"],candidate_name=random_choice["candidate_name"],party_affiliation=random_choice["party_affiliation"],
                                          candidate_picture=random_choice["photo_url"],vote_time=voting_time_str) # kafka storage
                 
                  insertdatatotables.save_data_to_table_vote(conn,cur,voter_id= voter["voter_id"],candidate_id=random_choice["candidate_id"],voting_time=voting_time,vote=vote)# db storage

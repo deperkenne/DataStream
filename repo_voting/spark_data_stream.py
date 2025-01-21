@@ -132,24 +132,11 @@ if __name__ == "__main__":
             print("error:",e)
 
 
-    
 
-
-        # show data consume
-        def show_data_consume():
-            castDf = consume_data()
-
-            query =castDf\
-                  .writeStream\
-                  .outputMode("complete")\
-                  .format("console") \
-                  .start()
-            query.awaitTermination()
         
 
 
         if __name__ == "__main__":
-             # send_data_stream_to_kafka_topic()
              send_data_to_kafka()
 
         """

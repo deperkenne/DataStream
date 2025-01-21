@@ -63,7 +63,7 @@ For example, if your VM IP address is 192.168.178.100, Kafka will be accessible 
 
 ### git action for CI/CD
 To automate the testing and deployment of your application, you can use GitHub Actions. Below is an example of a GitHub Actions workflow configuration to ensure the application works as expected.
-You can modify this workflow.yml file according to your specific needs or the stack you're using. For instance, I have configured it to work with an Ubuntu server that I deployed in my virtual machine (VM). If you use a different server or stack, you can adjust the setup steps accordingly.
+You can modify this workflow. yml file according to your specific needs or the stack you're using. For instance, I have configured it to work with an Ubuntu server that I deployed in my virtual machine (VM). If you use a different server or stack, you can adjust the setup steps accordingly.
 
 ### Tech Stack Used
 - Data injection: API, Kafka
@@ -75,12 +75,12 @@ You can modify this workflow.yml file according to your specific needs or the st
 
 ## Screenshots
 ### Candidates and Parties information
-![candidates_and_party.png](images/candidates_and_party.png)
+![finalResult.png](image%2FfinalResult.png)
 ### Voters
 ![voters.png](image%2Fvoters.png)
 
 ### Voting
-![voting.png](images%2Fvoting.png)
+![votes_table.png](image%2Fvotes_table.png)
 
 ### Dashboard
 ![dashboard.png](image%2Fdashboard.png)

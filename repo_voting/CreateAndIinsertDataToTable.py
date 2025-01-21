@@ -1,5 +1,6 @@
 import psycopg2
-from sparkstream.repo_voting.insertdatatotables import fetchall_votes
+from insertdatatotables import fetchall_votes, fetchall_candidates_table_data, insert_data_to_db
+from sparkstream.repo_voting.insertdatatotables import insert_voters_data_to_db
 
 cur = None
 conn= None
@@ -10,9 +11,9 @@ def connection_to_db():
     try:
       conn = psycopg2.connect(host="192.168.178.194",
             port="5432",
-            dbname="db",
-            user="root",
-            password="root"   )
+            dbname="my-db",
+            user="kenne",
+            password="kenne"   )
       print("connection to database success")
       cur = conn.cursor()
 
@@ -117,10 +118,25 @@ def create_table_results_vote():
       print(e)
 
 
+def delete(cur):
+    try:
+        # Exécuter la commande DELETE pour supprimer toutes les lignes de la table votes
+        cur.execute("DELETE FROM votes")
+
+        # Commit si vous êtes dans une transaction
+        cur.connection.commit()
+
+        print("All records have been deleted from the votes table.")
+    except Exception as e:
+        # En cas d'erreur, rollback pour annuler toute modification
+        cur.connection.rollback()
+        print(f"An error occurred: {e}")
+
+
 
 if __name__ == "__main__":
   connection_to_db()
-fetchall_votes(cur)
+  delete(cur)
 
 
 

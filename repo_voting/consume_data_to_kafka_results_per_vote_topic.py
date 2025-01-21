@@ -11,7 +11,7 @@ list_results_vote_to_save_to_db = []
 
 # consumer configuration
 consumer = KafkaConsumer(
-    "results_vote_per_candidate_topic",
+    "results_vote_topic",
     bootstrap_servers=["192.168.178.194:9092"],
     group_id=None,  # no consume group
     auto_offset_reset="earliest",
