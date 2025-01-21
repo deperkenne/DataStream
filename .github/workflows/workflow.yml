@@ -68,13 +68,15 @@
                  uses: actions/checkout@v2
                - name: show firewall
                  run:  sudo ufw status
-               - name: Set up SSH key
-                 uses: webfactory/ssh-agent@v0.5.3
+               - name: SSH into remote server
+                 uses: appleboy/ssh-action@v0.1.8
                  with:
-                   ssh-private-key: ${{ secrets.PASSWORD }}
-               - name: Connect to VM and run a command
-                 run: |
-                   ssh -o StrictHostKeyChecking=no kenne@192.168.178.194 "hostname && whoami"
+                   host: ${{secrets.HOST}}
+                   username: ${{secrets.USERNAME}}
+                   port: ${{secrets.PORT}}
+                   password: ${{secrets.PASSWORD}}
+
+
                
               
               
