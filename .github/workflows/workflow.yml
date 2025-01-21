@@ -72,7 +72,6 @@
                  uses: webfactory/ssh-agent@v0.5.3
                  with:
                    ssh-private-key: ${{ secrets.PASSWORD }}
-           
                - name: Connect to VM and run a command
                  run: |
                    ssh -o StrictHostKeyChecking=no kenne@192.168.178.194 "hostname && whoami"
