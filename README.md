@@ -71,8 +71,9 @@ You can modify this workflow. yml file according to your specific needs or the s
 
 
 ## Screenshots
-### realtime vote per candidate
-![finalResult.png](image%2FfinalResult.png)
+###
+![candidate.png](image%2Fcandidate.png)
+
 ### Voters
 ![voters.png](image%2Fvoters.png)
 
@@ -81,4 +82,6 @@ You can modify this workflow. yml file according to your specific needs or the s
 
 ### Dashboard
 ![dashboard.png](image%2Fdashboard.png)
+### realtime vote per candidate
+![finalResult.png](image%2FfinalResult.png)
 
