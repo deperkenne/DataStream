@@ -80,8 +80,10 @@ You can modify this workflow. yml file according to your specific needs or the s
 ### Voting
 ![votes_table.png](image%2Fvotes_table.png)
 
-### Dashboard
-![dashboard.png](image%2Fdashboard.png)
 ### realtime vote per candidate
 ![finalResult.png](image%2FfinalResult.png)
+
+### Dashboard
+![dashboard.png](image%2Fdashboard.png)
+
 
