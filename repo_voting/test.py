@@ -1,15 +1,17 @@
+import time
 from unittest import mock
-
+from unittest.mock import MagicMock
 import pytest
 import requests
 import psycopg2
-from unittest import mock
-from insertdatatotables import get_data
 
-
+from .CreateAndIinsertDataToTable import create_table_candidates
+from .insertdatatotables import generate_voter_data, get_data, fetchall_candidates_table_data, insert_voters_data_to_db
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
 BASE_URL_NOT_EXIST = 'https://randomuser.'
+
+
 
 
 
@@ -43,89 +45,117 @@ def test_get_data_raises_exception_on_network_error(mock_get):
     with pytest.raises(Exception, match="Simulated connection error"):
         get_data(BASE_URL)
 
-# Mock for get_data
-def mock_get_data(*args, **kwargs):
-    return set_up_mock_candidates()
-# Mock for `get_data`
-@mock.patch("get_data", return_value=mock_get_data)
-def test_insert_candidates(mock_get_data):
-    """
-    Test to verify the insertion of candidates into the database.
-    """
-    # Connect to the test database
-    conn = psycopg2.connect(**DB_CONFIG)
-    cur = conn.cursor()
 
-    try:
-        # Call the main function
-        candidates_data = get_data(BASE_URL)
-        i = 0  # Index for the parties
 
-        for candidate in candidates_data:
-            # Extract the candidate's unique identifier (UUID)
-            uuid = candidate["login"]["uuid"]
 
-            # Combine first and last names to construct the full name
-            candidate_name = candidate["name"]["first"] + " " + candidate["name"]["last"]
+def test_load_data_correctly_from_db():
+    # given
 
-            # Assign a party affiliation to the candidate
-            party = PARTIES[i]
+    mock_cursor = MagicMock()
 
-            # Placeholder text for the candidate's biography
-            bio = "A brief bio of the candidate."
+    #when
+    fetchall_candidates_table_data(mock_cursor)
 
-            # Placeholder text for the candidate's campaign platform
-            campaign = "Key campaign promises or platform."
 
-            # URL for the candidate's profile picture
-            pict = candidate["picture"]["large"]
+    # then
+    mock_cursor.execute.assert_called_once_with("""SELECT * FROM candidates""")
+    mock_cursor.fetchall.assert_called_once()
 
-            # Increment the index to move to the next party
-            i += 1
 
-            # Execute the SQL INSERT query to add the candidate to the database
-            cur.execute(
-                """
-                INSERT INTO candidates(candidate_id, candidate_name, party_affiliation, biography, campaign_platform, photo_url)
-                VALUES (%s, %s, %s, %s, %s, %s)
-                """,
-                (uuid, candidate_name, party, bio, campaign, pict)
-            )
-            # Commit the transaction to save the changes
-            conn.commit()
 
-        # Verify that the data was inserted correctly
-        cur.execute("SELECT * FROM candidates WHERE candidate_id = %s", ("1234-5678",))
-        result = cur.fetchone()
 
-        # Assert that the data exists in the database
-        assert result is not None, "The data was not inserted into the database."
-        # Assert that the candidate's name is correct
-        assert result[1] == "John Doe", "The candidate's name is incorrect."
-        # Assert that the party affiliation is correct
-        assert result[2] == "Party A", "The party affiliation is incorrect."
 
-        print("Test passed: Data was inserted correctly.")
-    finally:
-        # Clean up the database after the test
-        cur.execute("DELETE FROM candidates WHERE candidate_id IN (%s, %s)", ("1234-5678", "8765-4321"))
-        conn.commit()
+voter_id_1 = 140
+voter_id_2 = voter_id_1+1
 
-        # Close the cursor and connection
-        cur.close()
-        conn.close()
 
+def setUpMockVoterData():
+    global voter_id_1
+    voter_id_1+=1
+    return  {
+        "voter_id": voter_id_1,
+        "voter_name": "John Doe",
+        "date_of_birth": "1990-01-01",
+        "gender": "Male",
+        "nationality": "US",
+        "registration_number": "123456",
+        "address": {
+            "street": "123 Main St",
+            "city": "New York",
+            "state": "NY",
+            "country": "USA",
+            "postcode": "10001",
+        },
+        "email": "johndoe@example.com",
+        "phone_number": "1234567890",
+        "cell_number": "0987654321",
+        "picture": "http://example.com/picture.jpg",
+        "registered_age": 30,
+    }
+# Patch generate_voter_data
+@mock.patch("sparkstream.repo_voting.insertdatatotables.generate_voter_data", side_effect=setUpMockVoterData)
+def test_insert_voters_data_to_db(mock_generate_voter_data):
+    global voter_id_1
+    global voter_id_2
+    # given
+
+    mock_conn = psycopg2.connect(host="192.168.178.194",
+            port="5432",
+            dbname="my-db",
+            user="kenne",
+            password="kenne" )
+    mock_cursor = mock_conn.cursor()
+
+
+
+    # when
+    insert_voters_data_to_db(mock_conn, mock_cursor)
+    mock_cursor.execute("SELECT * FROM voters")
+    count = len(list(mock_cursor.fetchall()))
+
+    #then
+
+    assert count > 100
+    assert mock_generate_voter_data.call_count == 2
+    print(str(voter_id_2))
+    delete_row_after_insert(mock_cursor, str(voter_id_2), str(voter_id_1))
+
+
+
+
+
+
+
+
+def test_create_tables_with_correct_properties():
+    # given
+    mock_conn = MagicMock()
+    mock_cur = MagicMock()
+
+    # when
+    create_table_candidates(mock_conn,mock_cur)
+
+    # then
+    mock_cur.execute.assert_called_once_with("""CREATE TABLE IF NOT EXISTS candidates (
+                    candidate_id VARCHAR(255) PRIMARY KEY,
+                    candidate_name VARCHAR(255),
+                    party_affiliation VARCHAR(255),
+                    biography TEXT,
+                    campaign_platform TEXT,
+                    photo_url TEXT
+                    )""")
+    mock_conn.commit.assert_called_once()
 
 
 
 
 # configuration for db_test
 DB_CONFIG = {
-    "dbname": "test_db",
-    "user": "test_user",
-    "password": "test_password",
-    "host": "localhost",
-    "port": 5432
+    "dbname": "my-db",
+    "user": "kenne",
+    "password": "kenne",
+    "host": "192.168.178.194",
+    "port": "5432"
 }
 
 # Données de test
@@ -149,8 +179,16 @@ def set_up_mock_candidates():
     },
 ]
 
+def delete_row_after_insert(cur, id1, id2):
+    try:
 
+        cur.execute("DELETE FROM voters WHERE voter_id IN (%s, %s)", (id1, id2))
+        cur.connection.commit()
 
+        print("All records have been deleted from the votes table.")
+    except Exception as e:
+        cur.connection.rollback()
+        print(f"An error occurred: {e}")
 
 
 

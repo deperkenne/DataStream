@@ -1,7 +1,7 @@
 import requests
 import random
 import time
-from  insertDataToKafkaTopic import send_data_to_Kafka_topic
+from  .insertDataToKafkaTopic import send_data_to_Kafka_topic
 
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
@@ -182,7 +182,7 @@ def generate_voter_data():
 def insert_voters_data_to_db(conn,cur):
     i = 0
     try:
-          for i in range(100):
+          for i in range(2):
                 voter = generate_voter_data()
                 #send_data_to_kafka("voters_topic",voter_id=voter["voter_id"],voter_name=["voter_name"])
 
@@ -229,9 +229,7 @@ def save_data_to_table_vote(cur,**kwargs):
 
 
 def fetchall_candidates_table_data(cur):
-    cur.execute("""
-          SELECT * FROM candidates
-      """)
+    cur.execute("""SELECT * FROM candidates""")
     for candi in [candidate for candidate in cur.fetchall()]:
         print(candi)
 

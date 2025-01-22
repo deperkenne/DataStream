@@ -1,6 +1,6 @@
 import psycopg2
-from insertdatatotables import fetchall_votes, fetchall_candidates_table_data, insert_data_to_db
-from sparkstream.repo_voting.insertdatatotables import insert_voters_data_to_db
+from .insertdatatotables import fetchall_votes, fetchall_candidates_table_data, insert_data_to_db
+
 
 cur = None
 conn= None
@@ -23,22 +23,16 @@ def connection_to_db():
 
 
 
-def create_table_candidates():
-    global conn
-    global cur
+def create_table_candidates(conn,cur):
     try:
-       cur.execute(
-            """
-            CREATE TABLE IF NOT EXISTS candidates (
+       cur.execute("""CREATE TABLE IF NOT EXISTS candidates (
                     candidate_id VARCHAR(255) PRIMARY KEY,
                     candidate_name VARCHAR(255),
                     party_affiliation VARCHAR(255),
                     biography TEXT,
                     campaign_platform TEXT,
                     photo_url TEXT
-                    )
-                """
-            )
+                    )""")
 
        conn.commit()
        print("table candidates create")
@@ -46,9 +40,8 @@ def create_table_candidates():
        print(e)
 
 
-def create_table_voters():
-    global conn
-    global cur
+def create_table_voters(conn,cur):
+
     try:
         cur.execute("""
                 CREATE TABLE IF NOT EXISTS voters (
@@ -78,9 +71,7 @@ def create_table_voters():
         print(e)
 
 
-def create_table_votes():
-    global conn
-    global cur
+def create_table_votes(conn,cur):
     try:
 
         cur.execute("""
@@ -98,9 +89,7 @@ def create_table_votes():
       print(e)
 
 
-def create_table_results_vote():
-  global conn
-  global cur
+def create_table_results_vote(conn,cur):
   try:
      cur.execute("""
             CREATE TABLE IF NOT EXISTS results_vote (
@@ -118,25 +107,12 @@ def create_table_results_vote():
       print(e)
 
 
-def delete(cur):
-    try:
-        # Exécuter la commande DELETE pour supprimer toutes les lignes de la table votes
-        cur.execute("DELETE FROM votes")
-
-        # Commit si vous êtes dans une transaction
-        cur.connection.commit()
-
-        print("All records have been deleted from the votes table.")
-    except Exception as e:
-        # En cas d'erreur, rollback pour annuler toute modification
-        cur.connection.rollback()
-        print(f"An error occurred: {e}")
 
 
 
 if __name__ == "__main__":
-  connection_to_db()
-  delete(cur)
+   pass
+
 
 
 
