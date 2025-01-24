@@ -71,6 +71,7 @@
                  uses: appleboy/ssh-action@v0.1.8
                  with:
                    host: ${{secrets.HOST}}
+                   port: 13128
                    username: ${{secrets.USERNAME}}
                    password: ${{secrets.PASSWORD}}
 
