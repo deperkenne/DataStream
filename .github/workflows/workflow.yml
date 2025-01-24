@@ -70,10 +70,10 @@
         - name: install dependencies
           run: |
             python -m pip install --upgrade pip  # update pip 
-            pip install -r requirements.txt   # Install dependencies belong  requirements.txt
-        - name : copy code src
+            pip install -r requirements.txt   
+        - name : cd to downloaded file
           run: |
-            cp -r repo_voting ./my_repo
+              cd downloaded_folder
         - name : run test with pytest
           run: |
              pytest 
