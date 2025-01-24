@@ -73,7 +73,8 @@
                    
                    echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
                    echo "Scanning host: ${{ secrets.HOST }}"
-                   ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+                    echo "Scanning host: ${{ secrets.PASSWORD }}"
+                   ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_host
                - name: connect and push
                  run: ssh ${{ secrets.PASSWORD }}@${{ secrets.HOST }}
                - name: clean
