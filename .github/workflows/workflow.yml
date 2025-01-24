@@ -105,7 +105,7 @@
              ls -al
              cd sparkstream && touch __init__.py
              cp -r ../*.py ./repo_voting
-             cd ./sparkstream/repo_voting
+             cd repo_voting
              pytest test.py
      
 
