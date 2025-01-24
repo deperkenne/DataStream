@@ -102,8 +102,9 @@
           run: |
              cd downloaded_folder
              mkdir -p sparkstream/repo_voting
-  
-             cp -r ./*.py sparkstream/repo_voting
+             ls -al
+             cd sparstream && touch __init__.py
+             cp -r ../*.py ./repo_voting
              cd ./sparkstream/repo_voting
              pytest test.py
      
