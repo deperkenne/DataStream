@@ -66,8 +66,8 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               - name: show firewall
-                 run:  sudo ufw status
+               - name: test connection
+                 run: ping 192.168.178.194
                - name: SSH into remote server
                  uses: appleboy/ssh-action@v0.1.8
                  with:
