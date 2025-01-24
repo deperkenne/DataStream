@@ -72,11 +72,11 @@
                    mkdir -p ~/.ssh
                    
                    echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
-                   echo "Scanning host: ${{ secrets.HOST }}"
+                   echo "Scanning host: ${{ secrets.HOSTNAME }}"
                     echo "Scanning host: ${{ secrets.PASSWORD }}"
                    ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_host
                - name: connect and push
-                 run: ssh ${{ secrets.PASSWORD }}@${{ secrets.HOST }}
+                 run: ssh ${{ secrets.PASSWORD }}@${{ secrets.HOSTNAME }}
                - name: clean
                  run: rm -rf ~/.ssh
 
