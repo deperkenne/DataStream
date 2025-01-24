@@ -93,7 +93,7 @@ def setUpMockVoterData():
         "registered_age": 30,
     }
 # Patch generate_voter_data
-@mock.patch("insertdatatotables.generate_voter_data", side_effect=setUpMockVoterData)
+@mock.patch("sparkstream.repo_voting.insertdatatotables.generate_voter_data", side_effect=setUpMockVoterData)
 def test_insert_voters_data_to_db(mock_generate_voter_data):
     global voter_id_1
     global voter_id_2
