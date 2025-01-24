@@ -101,6 +101,9 @@
         - name : run test with pytest
           run: |
              cd downloaded_folder
+             mkdir -p sparkstream/repo_voting
+             cp -r . sparkstream/repo_voting
+             cd ./sparkstream/repo_voting
              pytest test.py
      
 
