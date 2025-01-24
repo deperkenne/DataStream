@@ -39,6 +39,33 @@
            name: my-artifact
            path: ./repo_voting
 
+    validation_code:
+      runs-on: ubuntu-24.04
+      needs: build # this code depends on job build
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v2
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install flake8
+        - name: Set up Python
+          uses: actions/setup-python@v4
+          with:
+           python-version: '3.11'
+
+        - name: Run Flake8 linter
+          run: |
+            flake8 . --count --max-line-length=88 --statistics
+
+        - name: Show success message
+          if: success()
+          run: echo "Code validation passed successfully! "
+
+        - name: Fail workflow
+          if: failure()
+          run: echo "Code validation failed!
+
 
     test:
       runs-on: ubuntu-24.04
