@@ -32,10 +32,13 @@
           run: |
              mkdir voting_app_repo
              cp -r repo_voting voting_app_repo
-             cd voting_app_repo/repo_voting
-        - name: send delivrary to test
-          run : |
-              rsync -avz -e repo_voting 10.1.0.124:./
+             cd voting_app_repo
+        - name: Upload files as artifact
+          uses: actions/upload-artifact@v3
+          with:
+           name: shared-files
+           path: ./repo_voting
+
 
     test:
       runs-on: ubuntu-24.04
@@ -48,8 +51,14 @@
           uses: actions/setup-python@v2
           with:
            python-version: '3.10'
-        - name : show ip a
-          run : ip a
+        - name: Download artifact
+          uses: actions/download-artifact@v3
+          with:
+            name: my-artifact         
+            path: ./downloaded_folder
+
+        - name: List downloaded files
+          run: ls -R ./downloaded_folde
 
         - name: install dependencies
           run: |
