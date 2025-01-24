@@ -61,6 +61,7 @@
           run: | 
               if [ -d "./downloaded_folder" ]; then
                echo "Artifact downloaded successfully."
+               ls -al downloaded_folder
                else
                echo "Download failed. Directory does not exist."
                exit 1
