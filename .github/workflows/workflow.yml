@@ -21,6 +21,8 @@
           uses: actions/setup-python@v2
           with:
             python-version: '3.10'
+        - name : show ip a
+          run: ip a
 
         - name: Install dependencies
           run: |
@@ -30,12 +32,40 @@
           run: |
              mkdir voting_app_repo
              cp -r repo_voting voting_app_repo
-             ls -al voting_app_repo/repo_voting
+             cd voting_app_repo
         - name: Upload files as artifact
           uses: actions/upload-artifact@v3
           with:
-           name: shared-files
-           path: voting_app_repo
+           name: my-artifact
+           path: ./repo_voting
+
+    validation_code:
+      runs-on: ubuntu-24.04
+      needs: build # this code depends on job build
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v2
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install flake8
+        - name: Set up Python
+          uses: actions/setup-python@v4
+          with:
+           python-version: '3.11'
+
+        - name: Run Flake8 linter
+          run: |
+            flake8 . --count --max-line-length=88 --statistics
+
+        - name: Show success message
+          if: success()
+          run: echo "Code validation passed successfully! "
+
+        - name: Fail workflow
+          if: failure()
+          run: echo "Code validation failed!"
+
 
     test:
       runs-on: ubuntu-24.04
@@ -48,17 +78,30 @@
           uses: actions/setup-python@v2
           with:
            python-version: '3.10'
+        - name: Download artifact
+          uses: actions/download-artifact@v3
+          with:
+            name: my-artifact         
+            path: ./downloaded_folder
+
+        - name: List downloaded files
+          run: | 
+              if [ -d "./downloaded_folder" ]; then
+               echo "Artifact downloaded successfully."
+               ls -al downloaded_folder
+               else
+               echo "Download failed. Directory does not exist."
+               exit 1
+              fi
 
         - name: install dependencies
           run: |
             python -m pip install --upgrade pip  # update pip 
-            pip install -r requirements.txt   # Install dependencies belong  requirements.txt
-        - name : copy code src
-          run: |
-            cp -r repo_voting ./my_repo
+            pip install -r requirements.txt   
         - name : run test with pytest
           run: |
-             pytest 
+             cd downloaded_folder
+             pytest test.py
      
 
     sshconnection:
