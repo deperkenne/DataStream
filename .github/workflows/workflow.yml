@@ -72,9 +72,11 @@
                    mkdir -p ~/.ssh
                    
                    echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
+                   chmod 600 ~/.ssh/id_rsa
                    echo "Scanning host: ${{ secrets.HOSTNAME }}"
                    echo "Scanning host: ${{ secrets.PASSWORD }}"
                    ssh-keyscan -H -p 13128  ${{ secrets.HOSTNAME }} > ~/.ssh/known_hosts
+                   chmod 600 ~/.ssh/known_hosts
                - name: Debug SSH connection
                  run: ssh -p 13128 ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }}
                - name: clean
