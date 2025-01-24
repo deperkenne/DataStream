@@ -21,6 +21,8 @@
           uses: actions/setup-python@v2
           with:
             python-version: '3.10'
+        - name : show ip a
+          run: ip a
 
         - name: Install dependencies
           run: |
@@ -48,6 +50,8 @@
           uses: actions/setup-python@v2
           with:
            python-version: '3.10'
+        - name : show ip a
+          run : ip a
 
         - name: install dependencies
           run: |
