@@ -67,13 +67,15 @@
                - name: Check out code
                  uses: actions/checkout@v2
                
-               - name: SSH into remote server
-                 uses: appleboy/ssh-action@v0.1.8
-                 with:
-                   host: ${{secrets.HOST}}
-                   port: 13128
-                   username: ${{secrets.USERNAME}}
-                   password: ${{secrets.PASSWORD}}
+               - name: install ssh keys
+                 run: |
+                   install -m 600 -D /dev/null ~/.ssh/id_rsa
+                   echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
+                   ssh-keyscan -H ${{ secrets.HOST }} > ~/.ssh/knows_hosts
+               - name: connect and push
+                 run: ssh ${{ secrets.PASSWORD }}@${{ secrets.HOST }}
+               - name: clean
+                 run: rm -rf ~/.ssh
 
 
                
