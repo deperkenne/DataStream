@@ -75,8 +75,8 @@
                    echo "Scanning host: ${{ secrets.HOSTNAME }}"
                    echo "Scanning host: ${{ secrets.PASSWORD }}"
                    ssh-keyscan -H -p 13128  ${{ secrets.HOSTNAME }} > ~/.ssh/known_hosts
-               - name: connect and push
-                 run: ssh ${{ secrets.PASSWORD }}@${{ secrets.HOSTNAME }}
+               - name: Debug SSH connection
+                 run: ssh -p 13128 ${{ secrets.USERNAME }}@${{ secrets.HOST }}
                - name: clean
                  run: rm -rf ~/.ssh
 
