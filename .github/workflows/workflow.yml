@@ -32,12 +32,10 @@
           run: |
              mkdir voting_app_repo
              cp -r repo_voting voting_app_repo
-             ls -al voting_app_repo/repo_voting
-        - name: Upload files as artifact
-          uses: actions/upload-artifact@v3
-          with:
-           name: shared-files
-           path: voting_app_repo
+             cd voting_app_repo/repo_voting
+        - name: send delivrary to test
+          run : |
+              rsync -avz -e repo_voting 10.1.0.124:./
 
     test:
       runs-on: ubuntu-24.04
