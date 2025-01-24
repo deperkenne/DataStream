@@ -78,7 +78,9 @@
                    ssh-keyscan -H -p 13128  ${{ secrets.HOSTNAME }} > ~/.ssh/known_hosts
                    chmod 600 ~/.ssh/known_hosts
                - name: Debug SSH connection
-                 run: ssh -p 13128 ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }}
+                 run: |
+                    ssh -p 13128 ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }}
+                    ls -al
                - name: clean
                  run: rm -rf ~/.ssh
 
