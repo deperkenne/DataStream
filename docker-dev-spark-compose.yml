@@ -1,155 +1,90 @@
-
-version: '3.7'
+version: "3.7"
 services:
-  zookeeper-1:
-    image: confluentinc/cp-zookeeper:7.4.1
-    hostname: zookeeper-1
-    container_name: zookeeper-1
-    volumes:
-      - ./zookeeper-1_data:/var/lib/zookeeper/data
-      - ./zookeeper-1_log:/var/lib/zookeeper/log
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-      ZOO_MY_ID: 1
-      ZOO_SERVERS: server.1=zookeeper-1:2888:3888;2181 server.2=zookeeper-2:2888:3888;2181 server.3=zookeeper-3:2888:3888;2181
-    networks:
-      spark-network:
-        ipv4_address: 10.6.0.2
-
-  zookeeper-2:
-    image: confluentinc/cp-zookeeper:7.4.1
-    hostname: zookeeper-2
-    container_name: zookeeper-2
-    volumes:
-      - ./zookeeper-2_data:/var/lib/zookeeper/data
-      - ./zookeeper-2_log:/var/lib/zookeeper/log
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-      ZOO_MY_ID: 2
-      ZOO_SERVERS: server.1=zookeeper-1:2888:3888;2181 server.2=zookeeper-2:2888:3888;2181 server.3=zookeeper-3:2888:3888;2181
-    networks:
-      spark-network:
-        ipv4_address: 10.6.0.3
-
-  zookeeper-3:
-    image: confluentinc/cp-zookeeper:7.4.1
-    hostname: zookeeper-3
-    container_name: zookeeper-3
-    volumes:
-      - ./zookeeper-3_data:/var/lib/zookeeper/data
-      - ./zookeeper-3_log:/var/lib/zookeeper/log
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-      ZOO_MY_ID: 3
-      ZOO_SERVERS: server.1=zookeeper-1:2888:3888;2181 server.2=zookeeper-2:2888:3888;2181 server.3=zookeeper-3:2888:3888;2181
-    networks:
-      spark-network:
-        ipv4_address: 10.6.0.4
-
-
-  broker-1:
-    image: confluentinc/cp-kafka:7.4.1
-    hostname: broker-1
-    container_name: broker-1
-    volumes:
-      - ./broker-1-data:/var/lib/kafka/data
-    depends_on:
-      - zookeeper-1
-      - zookeeper-2
-      - zookeeper-3
+  spark-master:
+    image: docker.io/bitnami/spark:3.5.0
+    container_name: spark-master
+    hostname: spark-master
+    user: root
     ports:
-      - 9092:9092
-      - 29092:29092
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181
-      KAFKA_ADVERTISED_LISTENERS: HOST://127.0.0.1:9092,INTERNAL://broker-1:29092
-      KAFKA_LISTENERS: HOST://0.0.0.0:9092,INTERNAL://0.0.0.0:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: HOST:PLAINTEXT,INTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_SNAPSHOT_TRUST_EMPTY: true
+      - "8080:8080"
+      - "7077:7077"
     networks:
       spark-network:
-        ipv4_address: 10.6.0.5
-
-  broker-2:
-    image: confluentinc/cp-kafka:7.4.1
-    hostname: broker-2
-    container_name: broker-2
+        ipv4_address: 10.5.0.2
     volumes:
-      - ./broker-2-data:/var/lib/kafka/data
-    depends_on:
-      - zookeeper-1
-      - zookeeper-2
-      - zookeeper-3
-      - broker-1
-    ports:
-      - 9093:9093
-      - 29093:29093
+       - ./apps:/opt/spark-apps
+       - ./dependencies.sh:/opt/dependencies.sh
     environment:
-      KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181
-      KAFKA_ADVERTISED_LISTENERS: HOST://127.0.0.1:9093,INTERNAL://broker-2:29093
-      KAFKA_LISTENERS: HOST://0.0.0.0:9093,INTERNAL://0.0.0.0:29093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: HOST:PLAINTEXT,INTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_SNAPSHOT_TRUST_EMPTY: true
+      - "SPARK_LOCAL_IP=spark-master"
+  spark-worker-1:
+    image: docker.io/bitnami/spark:3.5.0
+    container_name: spark-worker-1
+    hostname: spark-worker-1
+    user: root
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081"
+    env_file: ./env/spark-worker.sh
+    environment:
+      - "SPARK_LOCAL_IP=spark-worker-1"
     networks:
       spark-network:
-        ipv4_address: 10.6.0.6
-
-  broker-3:
-    image: confluentinc/cp-kafka:7.4.1
-    hostname: broker-3
-    container_name: broker-3
+        ipv4_address: 10.5.0.3
     volumes:
-      - ./broker-3-data:/var/lib/kafka/data
+      - ./apps:/opt/spark-apps
+      - ./dependencies.sh:/opt/dependencies.sh
+  spark-worker-2:
+    image: docker.io/bitnami/spark:3.5.0
+    container_name: spark-worker-2
+    hostname: spark-worker-2
+    user: root
     depends_on:
-      - zookeeper-1
-      - zookeeper-2
-      - zookeeper-3
-      - broker-1
-      - broker-2
+      - spark-master
     ports:
-      - 9094:9094
-      - 29094:29094
+      - "8082:8081"
+    env_file: ./env/spark-worker.sh
     environment:
-      KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181
-      KAFKA_ADVERTISED_LISTENERS: HOST://127.0.0.1:9094,INTERNAL://broker-3:29094
-      KAFKA_LISTENERS: HOST://0.0.0.0:9094,INTERNAL://0.0.0.0:29094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: HOST:PLAINTEXT,INTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_SNAPSHOT_TRUST_EMPTY: true
+      - "SPARK_LOCAL_IP=spark-worker-2"
     networks:
       spark-network:
-        ipv4_address: 10.6.0.7
+        ipv4_address: 10.5.0.4
+    volumes:
+      - ./apps:/opt/spark-apps
+      - ./dependencies.sh:/opt/dependencies.sh
 
-
-  rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.4.1
-    ports:
-      - "8086:8086"
+  spark-worker-3:
+    image: docker.io/bitnami/spark:3.5.0
+    container_name: spark-worker-3
+    hostname: spark-worker-3
+    user: root
     depends_on:
-      - zookeeper-1
-      - zookeeper-2
-      - zookeeper-3
-      - broker-1
-      - broker-2
-      - broker-3
-    hostname: rest-proxy
-    container_name: rest-proxy
+      - spark-master
+    ports:
+      - "8083:8081"
+    env_file: ./env/spark-worker.sh
     environment:
-      KAFKA_REST_HOST_NAME: rest-proxy
-      KAFKA_REST_BOOTSTRAP_SERVERS: 'broker-1:29092,broker-2:29093,broker-3:29094'
-      IKAFKA_REST_LISTENERS: "http://0.0.0.0:8086"
-
+      - "SPARK_LOCAL_IP=spark-worker-3"
     networks:
       spark-network:
-        ipv4_address: 10.6.0.8
+        ipv4_address: 10.5.0.5
+    volumes:
+      - ./apps:/opt/spark-apps
+      - ./dependencies.sh:/opt/dependencies.sh
+  demo-database:
+    image: postgres:11.7-alpine
+    ports:
+      - "5432:5432"
+    user: root
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ./db_data_volume:/var/lib/postgresql/data
+    networks:
+      spark-network:
+        ipv4_address: 10.5.0.6
 
 networks:
   spark-network:
@@ -157,4 +92,4 @@ networks:
     ipam:
      driver: default
      config:
-       - subnet: 10.6.0.0/16
+       - subnet: 10.5.0.0/16
