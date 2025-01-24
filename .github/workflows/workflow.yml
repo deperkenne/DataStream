@@ -66,8 +66,8 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               - name: test connection
-                 run: ping 192.168.178.194
+               - name: show ip
+                 run: ip a
                - name: SSH into remote server
                  uses: appleboy/ssh-action@v0.1.8
                  with:
