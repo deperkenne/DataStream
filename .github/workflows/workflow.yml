@@ -127,15 +127,7 @@
                - name: clean
                  run: rm -rf ~/.ssh
 
-               - name: install ssh keys
-                 run: |
-                   install -m 600 -D /dev/null ~/.ssh/id_rsa
-                   echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
-                   ssh-keyscan ${{ secrets.HOST }} > ~/.ssh/knows_hosts
-               - name: connect and push
-                 run: ssh ${{ secrets.PASSWORD }}@${{ secrets.HOST }}
-               - name: clean
-                 run: rm -rf ~/.ssh
+           
 
 
                
