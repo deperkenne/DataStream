@@ -58,7 +58,13 @@
             path: ./downloaded_folder
 
         - name: List downloaded files
-          run: ls -R ./downloaded_folde
+          run: | 
+              if [ -d "./downloaded_folder" ]; then
+               echo "Artifact downloaded successfully."
+               else
+               echo "Download failed. Directory does not exist."
+               exit 1
+              fi
 
         - name: install dependencies
           run: |
