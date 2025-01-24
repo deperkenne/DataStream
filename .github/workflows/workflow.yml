@@ -101,6 +101,7 @@
         - name : cd to downloaded file
           run: |
               cd downloaded_folder
+              ls -al 
         - name : run test with pytest
           run: |
              pytest 
