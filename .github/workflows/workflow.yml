@@ -72,7 +72,6 @@
                  with:
                    host: ${{secrets.HOST}}
                    username: ${{secrets.USERNAME}}
-                   port: 13128
                    password: ${{secrets.PASSWORD}}
 
 
