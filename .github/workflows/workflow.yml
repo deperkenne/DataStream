@@ -66,15 +66,23 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               - name: show firewall
-                 run:  sudo ufw status
-               - name: SSH into remote server
-                 uses: appleboy/ssh-action@v0.1.8
-                 with:
-                   host: ${{secrets.HOST}}
-                   username: ${{secrets.USERNAME}}
-                   port: ${{secrets.PORT}}
-                   password: ${{secrets.PASSWORD}}
+               
+               - name: install ssh keys
+                 run: |
+                   mkdir -p ~/.ssh
+                   
+                   echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
+                   chmod 600 ~/.ssh/id_rsa
+                   echo "Scanning host: ${{ secrets.HOSTNAME }}"
+                   echo "Scanning host: ${{ secrets.PASSWORD }}"
+                   ssh-keyscan -H -p 13128  ${{ secrets.HOSTNAME }} > ~/.ssh/known_hosts
+                   chmod 600 ~/.ssh/known_hosts
+               - name: Debug SSH connection
+                 run: |
+                    ssh -p 13128 ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }}
+                    ls -al
+               - name: clean
+                 run: rm -rf ~/.ssh
 
                - name: install ssh keys
                  run: |
