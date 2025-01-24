@@ -69,9 +69,10 @@
                
                - name: install ssh keys
                  run: |
-                   install -m 600 -D /dev/null ~/.ssh/id_rsa
+                   mkdir -p ~/.ssh
+                   
                    echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
-                   ssh-keyscan -H ${{ secrets.HOST }} > ~/.ssh/knows_hosts
+                   ssh-keyscan -t rsa ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
                - name: connect and push
                  run: ssh ${{ secrets.PASSWORD }}@${{ secrets.HOST }}
                - name: clean
