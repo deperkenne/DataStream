@@ -72,7 +72,7 @@
                    mkdir -p ~/.ssh
                    
                    echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
-                   ssh-keyscan -H rsa ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+                   ssh-keyscan -t rsa -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
                - name: connect and push
                  run: ssh ${{ secrets.PASSWORD }}@${{ secrets.HOST }}
                - name: clean
