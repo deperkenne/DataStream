@@ -64,7 +64,7 @@
 
         - name: Fail workflow
           if: failure()
-          run: echo "Code validation failed!
+          run: echo "Code validation failed!"
 
 
     test:
