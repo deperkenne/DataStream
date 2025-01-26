@@ -145,7 +145,7 @@ def test_create_tables_with_correct_properties():
         )
         mock_conn.commit.assert_called_once()
     except Exception as e:
-        pass
+        print(e.args)
 
 
 # configuration for db_test
