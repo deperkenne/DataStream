@@ -72,6 +72,9 @@ You can modify this workflow. yml file according to your specific needs or the s
 
 ## Screenshots
 ###
+### Docker Compose 
+![Docker_compose.png](image%2FDocker_compose.png)
+
 ### CI/CD 
 ![CI_CD.png](image%2FCI_CD.png)
 ###
