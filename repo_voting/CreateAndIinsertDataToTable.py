@@ -1,4 +1,6 @@
 import psycopg2
+from alembic.operations.toimpl import create_table
+from insertdatatotables import fetchall_votes
 
 cur = None
 conn = None
@@ -8,11 +10,11 @@ def connection_to_db():
     global conn
     global cur
     try:
-        conn = psycopg2.connect(host="192.168.178.194",
-                                port="5432",
-                                dbname="my-db",
-                                user="kenne",
-                                password="kenne")
+        conn = psycopg2.connect(host="****",
+                                port="****",
+                                dbname="****",
+                                user="****",
+                                password="****")
         print("connection to database success")
         cur = conn.cursor()
     except Exception as e:
@@ -104,4 +106,5 @@ def create_table_results_vote(conn, cur):
 
 
 if __name__ == "__main__":
-    pass
+    connection_to_db()
+    fetchall_votes(cur)

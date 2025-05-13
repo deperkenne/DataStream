@@ -72,6 +72,9 @@ You can modify this workflow. yml file according to your specific needs or the s
 
 ## Screenshots
 ###
+### CI/CD 
+![CI_CD.png](image%2FCI_CD.png)
+###
 ![candidate.png](image%2Fcandidate.png)
 
 ### Voters

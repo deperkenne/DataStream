@@ -1,6 +1,6 @@
 import requests
 
-from .insertDataToKafkaTopic import send_data_to_Kafka_topic
+from insertDataToKafkaTopic import send_data_to_Kafka_topic
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
 PARTIES = ["Management Party", "Savior Party", "Tech Republic Party"]
@@ -266,7 +266,7 @@ def fetchall_voters_table_data(cur):
 
 def fetchall_votes(cur):
     cur.execute("""
-                SELECT *  from votes
+                SELECT *  from ecommerce
                 LIMIT 10
             """)
     for vote in [vote for vote in cur.fetchall()]:

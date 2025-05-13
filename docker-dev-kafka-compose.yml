@@ -12,6 +12,9 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=zookeeper-1:2888:3888;2181 server.2=zookeeper-2:2888:3888;2181 server.3=zookeeper-3:2888:3888;2181
+    healthcheck:
+      test: ["CMD", "curl", "-f","http://localhost:2888/health"]
+
     networks:
       spark-network:
         ipv4_address: 10.6.0.2
@@ -64,7 +67,7 @@ services:
       - 29092:29092
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181,
       KAFKA_ADVERTISED_LISTENERS: HOST://192.168.178.194:9092,INTERNAL://broker-1:29092
       KAFKA_LISTENERS: HOST://0.0.0.0:9092,INTERNAL://0.0.0.0:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: HOST:PLAINTEXT,INTERNAL:PLAINTEXT
@@ -145,10 +148,61 @@ services:
       KAFKA_REST_HOST_NAME: rest-proxy
       KAFKA_REST_BOOTSTRAP_SERVERS: 'broker-1:29092,broker-2:29093,broker-3:29094'
       IKAFKA_REST_LISTENERS: "http://0.0.0.0:8086"
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '--silent',
+          '--fail',
+          '-X',
+          'GET',
+          'http://localhost:8086/brokers'
+        ]
 
     networks:
       spark-network:
         ipv4_address: 10.6.0.8
+
+  debezium:
+    image: debezium/connect:latest
+    container_name: debezium
+    hostname: debezium
+    restart: always
+    depends_on:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+      - broker-1
+      - broker-2
+      - broker-3
+    ports:
+      - '8093:8083'
+    environment:
+      CONNECT_REST_ADVERTISED_HOST_NAME: debezium
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: connect_configs
+      STATUS_STORAGE_TOPIC: connect_statuses
+      OFFSET_STORAGE_TOPIC: connect_offsets
+      KEY_CONVERTER: org.apache.kafka.connect.json.jsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.jsonConverter
+      ENABLE_DEBEZIUM_SCRIPTING: 'true'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '--silent',
+          '--fail',
+          '-X',
+          'GET',
+          'http://localhost:8083/connectors'
+        ]
+
+    networks:
+      spark-network:
+        ipv4_address: 10.6.0.9
+
 
 networks:
   spark-network:

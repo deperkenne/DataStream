@@ -31,11 +31,11 @@ if __name__ == "__main__":
     cur = None
     conn = None
 
-    conn = psycopg2.connect(host="192.168.178.194",
-                            port="5432",
-                            dbname="db",
-                            user="root",
-                            password="root")
+    conn = psycopg2.connect(host="****",
+                            port="****",
+                            dbname="****",
+                            user="****",
+                            password="****")
     print("connection to database success")
     cur = conn.cursor()
 
