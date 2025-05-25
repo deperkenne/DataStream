@@ -36,7 +36,7 @@
         - name: Upload files as artifact
           uses: actions/upload-artifact@v4
           with:
-           name: my-artifact
+           name: my-new-artifact
            path:  voting_app_repo
 
     validation_code:
@@ -82,7 +82,7 @@
           uses: actions/download-artifact@v4
           with:
             name: my-artifact         
-            path:  voting_app_repo
+            path: voting_app_repo
 
         - name: List downloaded files
           run: | 
