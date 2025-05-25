@@ -79,15 +79,16 @@
           uses: actions/setup-python@v2
           with:
            python-version: '3.10'
+               
         - name: Download artifact
           uses: actions/download-artifact@v4
           with:
             name: my-artifact         
             path: voting_app
 
-        - name: List downloaded files
+        - name: List voting_app repo
           run: | 
-              if [ -d " voting_app" ]; then
+              if [ -d "voting_app" ]; then
                echo "Artifact downloaded successfully."
                ls -al  voting_app
                else
