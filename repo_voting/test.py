@@ -4,9 +4,8 @@ import pytest
 import os
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from voting_app.CreateAndinsertDataToTable import create_table_candidates
-from voting_app.insertdatatotables import get_data, fetchall_candidates_table_data
+from createTable import create_table_candidates
+from insertDataToTables import get_data, fetchall_candidates_table_data
 
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
