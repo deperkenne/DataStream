@@ -1,5 +1,4 @@
 import psycopg2
-from alembic.operations.toimpl import create_table
 from insertdatatotables import fetchall_votes
 
 cur = None
