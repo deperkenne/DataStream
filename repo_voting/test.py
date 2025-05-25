@@ -1,8 +1,8 @@
 from unittest import mock
 from unittest.mock import MagicMock
 import pytest
-from .CreateAndIinsertDataToTable import create_table_candidates
-from .insertdatatotables import get_data, fetchall_candidates_table_data
+from CreateAndIinsertDataToTable import create_table_candidates
+from insertdatatotables import get_data, fetchall_candidates_table_data
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
 BASE_URL_NOT_EXIST = 'https://randomuser.'
@@ -157,7 +157,7 @@ DB_CONFIG = {
     "port": "5432"
 }
 
-# Données de test
+# test data
 BASE_URL = "https://mock-api-url.com"
 
 PARTIES = ["Party A", "Party B"]
