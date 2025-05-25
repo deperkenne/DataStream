@@ -28,7 +28,7 @@
         - name: create repo and downloads files in this repo
           run: |
              mkdir voting_app_repo
-             cp -r repo_voting voting_app_repo
+             cp -r ../repo_voting voting_app_repo
              cd voting_app_repo
              ls -al
         - name: Upload files as artifact
