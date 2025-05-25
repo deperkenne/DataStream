@@ -1,6 +1,6 @@
 import requests
 
-from insertDataToKafkaTopic import send_data_to_Kafka_topic
+from .insertDataToKafkaTopic import send_data_to_Kafka_topic
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
 PARTIES = ["Management Party", "Savior Party", "Tech Republic Party"]
