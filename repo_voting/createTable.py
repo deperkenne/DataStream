@@ -1,5 +1,5 @@
 import psycopg2
-from insertDataToTables import fetchall_votes
+from .insertDataToTables import fetchall_votes
 
 cur = None
 conn = None
