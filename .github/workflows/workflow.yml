@@ -36,7 +36,7 @@
         - name: Upload files as artifact
           uses: actions/upload-artifact@v4
           with:
-           name: my-new-artifact
+           name: my-artifact
            path: voting_app_repo
 
     validation_code:
@@ -82,13 +82,13 @@
           uses: actions/download-artifact@v4
           with:
             name: my-artifact         
-            path: voting_app_repo
+            path: voting_app
 
         - name: List downloaded files
           run: | 
-              if [ -d " voting_app_repo" ]; then
+              if [ -d " voting_app" ]; then
                echo "Artifact downloaded successfully."
-               ls -al  voting_app_repo
+               ls -al  voting_app
                else
                echo "Download failed. Directory does not exist."
                exit 1
@@ -100,7 +100,7 @@
             pip install -r requirements.txt   
         - name : run test with pytest
           run: |
-             cd  voting_app_repo
+             cd  voting_app
              mkdir -p sparkstream/repo_voting
              ls -al
              cd sparkstream && touch __init__.py
