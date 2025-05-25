@@ -82,13 +82,13 @@
           uses: actions/download-artifact@v3
           with:
             name: my-artifact         
-            path: ./downloaded_folder
+            path: ./repo_voting
 
         - name: List downloaded files
           run: | 
-              if [ -d "./downloaded_folder" ]; then
+              if [ -d "./repo_voting" ]; then
                echo "Artifact downloaded successfully."
-               ls -al downloaded_folder
+               ls -al repo_voting
                else
                echo "Download failed. Directory does not exist."
                exit 1
@@ -100,7 +100,7 @@
             pip install -r requirements.txt   
         - name : run test with pytest
           run: |
-             cd downloaded_folder
+             cd repo_voting
              mkdir -p sparkstream/repo_voting
              ls -al
              cd sparkstream && touch __init__.py
