@@ -104,7 +104,7 @@
              mkdir -p sparkstream/repo_voting
              ls -al
              cd sparkstream && touch __init__.py
-             cp -r ../*.py ./repo_voting
+             cp -r ./*.py ./repo_voting
              cd repo_voting
              pytest test.py
      
