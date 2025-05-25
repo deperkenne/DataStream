@@ -1,11 +1,9 @@
 from unittest import mock
 from unittest.mock import MagicMock
 import pytest
-import os
-import sys
 
-from createTable import create_table_candidates
-from insertDataToTables import get_data, fetchall_candidates_table_data
+from .createTable import create_table_candidates
+from .insertDataToTables import get_data, fetchall_candidates_table_data
 
 
 BASE_URL = 'https://randomuser.me/api/?nat=gb'
