@@ -38,6 +38,7 @@
           with:
            name: my-artifact
            path: voting_app_repo
+           retention-days: 3  
 
     validation_code:
       runs-on: ubuntu-24.04
