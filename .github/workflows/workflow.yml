@@ -37,7 +37,7 @@
           uses: actions/upload-artifact@v4
           with:
            name: my-new-artifact
-           path:  voting_app_repo
+           path: voting_app_repo
 
     validation_code:
       runs-on: ubuntu-24.04
