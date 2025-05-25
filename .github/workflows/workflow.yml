@@ -37,7 +37,7 @@
           uses: actions/upload-artifact@v3
           with:
            name: my-artifact
-           path: ./repo_voting
+           path:  voting_app_repo
 
     validation_code:
       runs-on: ubuntu-24.04
@@ -82,13 +82,13 @@
           uses: actions/download-artifact@v3
           with:
             name: my-artifact         
-            path: ./repo_voting
+            path:  voting_app_repo
 
         - name: List downloaded files
           run: | 
-              if [ -d "./repo_voting" ]; then
+              if [ -d " voting_app_repo" ]; then
                echo "Artifact downloaded successfully."
-               ls -al repo_voting
+               ls -al  voting_app_repo
                else
                echo "Download failed. Directory does not exist."
                exit 1
@@ -100,7 +100,7 @@
             pip install -r requirements.txt   
         - name : run test with pytest
           run: |
-             cd repo_voting
+             cd  voting_app_repo
              mkdir -p sparkstream/repo_voting
              ls -al
              cd sparkstream && touch __init__.py
