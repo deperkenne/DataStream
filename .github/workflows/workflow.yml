@@ -39,6 +39,7 @@
            retention-days: 3  
 
     validation_code:
+      if: github.rf == 'refs/heads/main'
       runs-on: ubuntu-24.04
       needs: build # this code depends on job build
       steps:
