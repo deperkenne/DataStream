@@ -112,6 +112,7 @@
                - name: Check out code
                  uses: actions/checkout@v2
                - name: Add SSH Key
+                 run: |
                    echo "${{ secrets.AZURE_SSH_PRIVATE_KEY }}" > deploy_key
                    chmod 600 deploy_key
                - name: Debug SSH connection
