@@ -116,9 +116,12 @@
                    mkdir -p ~/.ssh
                    echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
                    chmod 600 ~/.ssh/id_rsa
-                   ssh-keyscan ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts
+                   ssh-keyscan -H ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts 2>/dev/null
+                 env:
+                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                   HOSTNAME: ${{ secrets.HOSTNAME }}
                - name: Execute Remote Command
-                 run: ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} "your_command_here"
+                 run: ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} "echo 'Connected successfully!'"
                     
   
 
