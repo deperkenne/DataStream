@@ -121,7 +121,8 @@
                    
                  env:
                    SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-                   HOSTNAME: ${{ secrets.HOSTNAME }}
+                   HOSTNAME: ${{ secrets.AZURE_CLOUD_HOSTNAME }}
+                   USERNAME: ${{ secrets.AZURE_CLOUD_USERNAME }}
                - name: Execute Remote Command
                  run: ssh -p 13128 ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} "echo 'Connected successfully!'"
                     
