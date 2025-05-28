@@ -122,7 +122,7 @@
                    ssh-keyscan 4.182.249.48 >> ~/.ssh/known_hosts
                   
                - name: Execute Remote Command
-                 run: ssh -o StrictHostKeyChecking=no kenne@4.182.249.48 "echo 'Connected successfully!'"
+                 run: ssh  kenne@4.182.249.48 "echo 'Connected successfully!'"
                     
   
 
