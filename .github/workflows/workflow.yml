@@ -39,6 +39,7 @@
            retention-days: 3  
 
     validation_code:
+      if: github.rf == 'rfs/heads/dev'
       runs-on: ubuntu-24.04
       needs: build # this code depends on job build
       steps:
@@ -115,15 +116,15 @@
                  run: |
                    mkdir -p ~/.ssh
                    
-                   echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
+                   echo "${{ secrets.AZURE_CLOUD_PASSWORD }}" > ~/.ssh/id_rsa
                    chmod 600 ~/.ssh/id_rsa
-                   echo "Scanning host: ${{ secrets.HOSTNAME }}"
-                   echo "Scanning host: ${{ secrets.PASSWORD }}"
-                   ssh-keyscan -H -p 13128  ${{ secrets.HOSTNAME }} > ~/.ssh/known_hosts
+                   echo "Scanning host: ${{ secrets.AZURE_CLOUD_HOSTNAME }}"
+                   echo "Scanning host: ${{ secrets.AZURE_CLOUD_PASSWORD }}"
+                   ssh-keyscan -H -p 13128  ${{ secrets.AZURE_CLOUD_HOSTNAME }} > ~/.ssh/known_hosts
                    chmod 600 ~/.ssh/known_hosts
                - name: Debug SSH connection
                  run: |
-                    ssh -p 13128 ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }}
+                    ssh -p 13128 ${{ secrets.AZURE_CLOUD_USERNAME }}@${{ secrets.AZURE_CLOUD_HOSTNAME }}
                     ls -al
                - name: clean
                  run: rm -rf ~/.ssh
