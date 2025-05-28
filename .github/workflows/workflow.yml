@@ -111,15 +111,16 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               
-               - name: install ssh keys
-                 uses: webfactory/ssh-agent@v0.7.0
-                 with:
-                    ssh-private-key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+               - name: Add SSH Key
+                   echo "${{ secrets.AZURE_SSH_PRIVATE_KEY }}" > deploy_key
+                   chmod 600 deploy_key
                - name: Debug SSH connection
                  run: |
-                     ssh -o StrictHostKeyChecking=no ${{ secrets.AZURE_CLOUD_USERNAME }}@${{ secrets.AZURE_CLOUD_HOSTNAME }} 
-                     "echo Hello from GitHub Actions!"
+                      ssh -o StrictHostKeyChecking=no \
+                          -o UserKnownHostsFile=/dev/null \
+                          -i "deploy_key" \
+                          "${{ secrets.AZURE_CLOUD_USERNAME }}@${{ secrets.AZURE_CLOUD_HOSTNAME }}" \
+                          "echo 'Successfully connected to Azure VM'"
                     
   
 
