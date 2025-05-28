@@ -112,13 +112,10 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               - name: Setup SSH
-                 run: |
-                   mkdir -p ~/.ssh
-                   echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-                   chmod 600 ~/.ssh/id_rsa
-                   ssh-keyscan -H -p 22 ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts 
-                   chmod 600 ~/.ssh/known_hosts
+               - name: Install SSH key
+                 uses: webfactory/ssh-agent@v0.7.0
+                 with:
+                   ssh-private-key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
                - name: Execute Remote Command
                  run: ssh -p 22 ${{ secrets.AZURE_USERNAME }}}@${{ secrets.AZURE_HOSTNAME }} "echo 'Connected successfully!'"
                     
