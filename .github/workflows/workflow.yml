@@ -116,7 +116,7 @@
                    mkdir -p ~/.ssh
                    echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
                    chmod 600 ~/.ssh/id_rsa
-                   ssh-keyscan -H -p 13128 ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts 
+                   ssh-keyscan -H -p 22 ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts 
                    chmod 600 ~/.ssh/known_hosts
                    
                  env:
@@ -124,7 +124,7 @@
                    HOSTNAME: ${{ secrets.AZURE_CLOUD_HOSTNAME }}
                    USERNAME: ${{ secrets.AZURE_CLOUD_USERNAME }}
                - name: Execute Remote Command
-                 run: ssh -p 13128 ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} "echo 'Connected successfully!'"
+                 run: ssh -p 22 ${{ secrets.AZURE_CLOUD_USERNAME }}}@${{ secrets.AZURE_CLOUD_HOSTNAME }} "echo 'Connected successfully!'"
                     
   
 
