@@ -68,7 +68,6 @@
 
 
     test:
-      if: github.rf == 'rfs/heads/dev'
       runs-on: ubuntu-24.04
       needs: build # this code depends on job build
       steps:
@@ -119,8 +118,6 @@
                    echo "${{ secrets.SSH_PRIVATE_KEY1 }}" | base64 --decode > /home/runner/.ssh/id_rsa
                    chmod 600  /home/runner/.ssh/id_rsa
                    eval "$(ssh-agent -s)"
-                   ssh-add /home/runner/.ssh/id_rsa
-                   echo "Host *\\n\\tStrictHostKeyChecking no\\n\\n" > /home/runner/.ssh/config
                    ssh-keyscan 4.182.249.48 >> ~/.ssh/known_hosts
                - name: Execute Remote Command
                  run: ssh  kenne@4.182.249.48 "echo 'Connected successfully!'"
