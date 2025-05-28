@@ -111,17 +111,14 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               - name: Add SSH Key
+               - name: Setup SSH
                  run: |
-                   echo "${{ secrets.AZURE_SSH_PRIVATE_KEY }}" > deploy_key
-                   chmod 600 deploy_key
-               - name: Debug SSH connection
-                 run: |
-                      ssh -o StrictHostKeyChecking=no \
-                          -o UserKnownHostsFile=/dev/null \
-                          -i "deploy_key" \
-                          "${{ secrets.AZURE_CLOUD_USERNAME }}@${{ secrets.AZURE_CLOUD_HOSTNAME }}" \
-                          "echo 'Successfully connected to Azure VM'"
+                   mkdir -p ~/.ssh
+                   echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+                   chmod 600 ~/.ssh/id_rsa
+                   ssh-keyscan ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts
+               - name: Execute Remote Command
+                 run: ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} "your_command_here"
                     
   
 
