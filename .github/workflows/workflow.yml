@@ -118,7 +118,7 @@
                    mkdir -p ~/.ssh 
                    echo "${{ secrets.SSH_PRIVATE_KEY1 }}" > ~/.ssh/id_rsa
                    chmod 600 ~/.ssh/id_rsa
-                   cat ~/.ssh/id_rsa.pub
+                   cat ~/.ssh/id_rsa
                    ssh-keyscan 4.182.249.48 >> ~/.ssh/known_hosts
                   
                - name: Execute Remote Command
