@@ -112,12 +112,13 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               - name: Install SSH key
-                 uses: webfactory/ssh-agent@v0.7.0
-                 with:
-                   ssh-private-key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+               - name: Add SSH host to known_hosts
+                 run: |
+                   mkdir -p ~/.ssh
+                   ssh-keyscan -p 22 4.182.249.48 >> ~/.ssh/known_hosts
+                  
                - name: Execute Remote Command
-                 run: ssh -p 22 ${{ secrets.AZURE_USERNAME }}@${{ secrets.AZURE_HOSTNAME }} "echo 'Connected successfully!'"
+                 run: ssh -p 22 ${{ secrets.AZURE_USERNAME }}@$4.182.249.48 "echo 'Connected successfully!'"
                     
   
 
