@@ -113,21 +113,15 @@
                  uses: actions/checkout@v2
                
                - name: install ssh keys
-                 run: |
-                   mkdir -p ~/.ssh
-                   
-                   echo "${{ secrets.AZURE_CLOUD_PASSWORD }}" > ~/.ssh/id_rsa
-                   chmod 600 ~/.ssh/id_rsa
-                   echo "Scanning host: ${{ secrets.AZURE_CLOUD_HOSTNAME }}"
-                   echo "Scanning host: ${{ secrets.AZURE_CLOUD_PASSWORD }}"
-                   ssh-keyscan -H -p 13128  ${{ secrets.AZURE_CLOUD_HOSTNAME }} > ~/.ssh/known_hosts
-                   chmod 600 ~/.ssh/known_hosts
+                 uses: webfactory/ssh-agent@v0.7.0
+                 with:
+                    ssh-private-key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
                - name: Debug SSH connection
                  run: |
-                    ssh -p 13128 ${{ secrets.AZURE_CLOUD_USERNAME }}@${{ secrets.AZURE_CLOUD_HOSTNAME }}
-                    ls -al
-               - name: clean
-                 run: rm -rf ~/.ssh
+                     ssh -o StrictHostKeyChecking=no ${{ secrets.AZURE_CLOUD_USERNAME }}@${{ secrets.AZURE_CLOUD_HOSTNAME }} 
+                     "echo Hello from GitHub Actions!"
+                    
+  
 
            
 
