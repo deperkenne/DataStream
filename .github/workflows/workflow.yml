@@ -114,7 +114,7 @@
                  uses: actions/checkout@v2
                - name: install ssh
                  run: |
-                   mkdir -p ~/.ssh
+                   mkdir -p ~/.ssh 
                    echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
                    chmod 600 ~/.ssh/id_rsa
                    ssh-keyscan 4.182.249.48 >> ~/.ssh/known_hosts
