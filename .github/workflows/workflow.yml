@@ -120,7 +120,7 @@
                    ssh-keyscan -H -p 22 ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts 
                    chmod 600 ~/.ssh/known_hosts
                - name: Execute Remote Command
-                 run: ssh -p 22 ${{ secrets.AZURE_CLOUD_USERNAME }}}@${{ secrets.AZURE_CLOUD_HOSTNAME }} "echo 'Connected successfully!'"
+                 run: ssh -p 22 ${{ secrets.AZURE_USERNAME }}}@${{ secrets.AZURE_HOSTNAME }} "echo 'Connected successfully!'"
                     
   
 
