@@ -68,6 +68,7 @@
 
 
     test:
+      if: github.rf == 'rfs/heads/dev'
       runs-on: ubuntu-24.04
       needs: build # this code depends on job build
       steps:
@@ -118,11 +119,6 @@
                    chmod 600 ~/.ssh/id_rsa
                    ssh-keyscan -H -p 22 ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts 
                    chmod 600 ~/.ssh/known_hosts
-                   
-                 env:
-                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-                   HOSTNAME: ${{ secrets.AZURE_CLOUD_HOSTNAME }}
-                   USERNAME: ${{ secrets.AZURE_CLOUD_USERNAME }}
                - name: Execute Remote Command
                  run: ssh -p 22 ${{ secrets.AZURE_CLOUD_USERNAME }}}@${{ secrets.AZURE_CLOUD_HOSTNAME }} "echo 'Connected successfully!'"
                     
