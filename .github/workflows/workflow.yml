@@ -118,7 +118,7 @@
                    ssh-keyscan -p 22 4.182.249.48 >> ~/.ssh/known_hosts
                   
                - name: Execute Remote Command
-                 run: ssh -p 22 ${{ secrets.AZURE_USERNAME }}@$4.182.249.48 "echo 'Connected successfully!'"
+                 run: ssh -p 22 kenne@$4.182.249.48 "echo 'Connected successfully!'"
                     
   
 
