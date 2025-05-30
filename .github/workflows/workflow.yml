@@ -39,6 +39,7 @@
            retention-days: 3  
 
     validation_code:
+      if: github.rf == 'rfs/heads/dev'
       runs-on: ubuntu-24.04
       needs: build # this code depends on job build
       steps:
@@ -110,23 +111,18 @@
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
-               
-               - name: install ssh keys
+               - name: install ssh
                  run: |
-                   mkdir -p ~/.ssh
                    
-                   echo "${{ secrets.PASSWORD }}" > ~/.ssh/id_rsa
-                   chmod 600 ~/.ssh/id_rsa
-                   echo "Scanning host: ${{ secrets.HOSTNAME }}"
-                   echo "Scanning host: ${{ secrets.PASSWORD }}"
-                   ssh-keyscan -H -p 13128  ${{ secrets.HOSTNAME }} > ~/.ssh/known_hosts
-                   chmod 600 ~/.ssh/known_hosts
-               - name: Debug SSH connection
-                 run: |
-                    ssh -p 13128 ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }}
-                    ls -al
-               - name: clean
-                 run: rm -rf ~/.ssh
+                   mkdir -p /home/runner/.ssh
+                   echo "${{ secrets.SSH_PRIVATE_KEY1 }}" | base64 --decode > /home/runner/.ssh/id_rsa
+                   chmod 600  /home/runner/.ssh/id_rsa
+                   eval "$(ssh-agent -s)"
+                   ssh-keyscan 4.182.249.48 >> ~/.ssh/known_hosts
+               - name: Execute Remote Command
+                 run: ssh  kenne@4.182.249.48 "echo 'Connected successfully!'"
+                    
+  
 
            
 
