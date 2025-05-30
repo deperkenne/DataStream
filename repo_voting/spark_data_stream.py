@@ -10,7 +10,7 @@ if __name__ == "__main__":
     try:
         spark = (
             SparkSession.builder
-            .appName("Sentiment")
+            .appName("votingApp")
             .master("local[*]")
             .config("spark.streaming.stopGracefullyOnShutdown", True)
             .config("spark.streaming.schemaInference", True)
