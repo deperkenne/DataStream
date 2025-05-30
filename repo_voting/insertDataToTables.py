@@ -12,13 +12,6 @@ def send_data_to_kafka(topic_data, **kwargs):
 
 
 def get_data(base_url):
-    """
-    Fetch data from an API and build a list containing exactly two male candidates
-    and one female candidate. Each candidate is unique, determined by their unique ID.
-
-    Returns:
-        list: A list of 3 candidate dictionaries (2 males and 1 female).
-    """
     candidate_id_list = {}  # Dictionary to track already fetched candidate IDs
     final_candidates = []  # List to store the final selection of candidates
     try:
