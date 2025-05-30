@@ -68,7 +68,6 @@
 
 
     test:
-      if: github.rf == 'rfs/heads/dev'
       runs-on: ubuntu-24.04
       needs: build # this code depends on job build
       steps:
@@ -108,6 +107,7 @@
      
 
     sshconnection:
+           if: github.rf == 'rfs/heads/dev'
            runs-on: ubuntu-24.04
            steps:
                - name: Check out code
