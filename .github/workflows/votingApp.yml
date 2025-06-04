@@ -42,7 +42,7 @@ jobs:
 
       - name: Run unit test
         run: |
-          pytest repo_voting/test.py
+          coverage run -m pytest repo_voting/test.py
         if : success()
       - name: Run tests with coverage
         run: |
