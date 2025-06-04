@@ -47,9 +47,10 @@
               
 
   sshconnection:
+           if: github.rf == 'rfs/heads/dev'
+
            runs-on: ubuntu-24.04
            needs: unit-testing
-           if : fail()
            steps:
                - name: Check out code
                  uses: actions/checkout@v2
