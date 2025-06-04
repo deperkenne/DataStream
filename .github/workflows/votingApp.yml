@@ -63,7 +63,7 @@ jobs:
         with:
           context: ./repo_voting
           push: false
-          tags: ${{ vars.DOCKER_USERNAME }}/voting-app:${{ github.sha}}
+          tags: kennetchofo/voting-app:${{ github.sha}}
       - name: Docker Image Test
         run: |
           docker images
