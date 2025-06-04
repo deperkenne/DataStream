@@ -45,6 +45,21 @@ jobs:
         run: |
           pytest repo_voting/test.py
 
+  docker:
+    name: Containerization
+    runs-on: ubuntu-latest
+    needs: unit-testing
+    steps:
+      - name: checkout Repo
+        uses: actions/checkout@v4
+      - name: Dockerhub Login
+        uses: docker/login-action@v2.2.0
+        with:
+          username: ${{ variables.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+
+
 
   sshconnection:
     if: github.rf == 'rfs/heads/dev'
