@@ -39,6 +39,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r repo_voting/requirements.txt
+          pip install coverage
 
       - name: Run unit test
         run: |
