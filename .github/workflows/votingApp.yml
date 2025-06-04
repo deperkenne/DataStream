@@ -74,7 +74,7 @@ jobs:
           docker images
           docker run --name votingApp kennetchofo/voting-app:${{ github.sha}}
           echo see the container log
-          docker log votingApp
+          docker logs votingApp
 
 
 
