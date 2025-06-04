@@ -63,11 +63,11 @@ jobs:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and test before push Docker image
         uses: docker/build-push-action@v4
         with:
           context: repo_voting
-          push: true
+          push: false
           tags: kennetchofo/voting-app:${{ github.sha}}
       - name: Docker Image Test
         run: |
@@ -75,6 +75,12 @@ jobs:
           docker run --name votingApp kennetchofo/voting-app:${{ github.sha}}
           echo see the container log
           docker logs votingApp
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: repo_voting
+          push: true
+          tags: kennetchofo/voting-app:${{ github.sha}}
 
 
 
