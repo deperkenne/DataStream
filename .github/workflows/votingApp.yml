@@ -41,7 +41,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run unit tests
+      - name: Run unit DockerComposeFile
         run: |
           pytest repo_voting/test.py
 
@@ -61,7 +61,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@4
         with:
-          context: ./repo_voting
+          context: repo_voting
           push: false
           tags: ${{ vars.DOCKER_USERNAME }}/voting-app:${{ github.sha}}
       - name: Docker Image Test
