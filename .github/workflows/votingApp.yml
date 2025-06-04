@@ -67,7 +67,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: repo_voting
-          push: false
+          push: true
           tags: kennetchofo/voting-app:${{ github.sha}}
       - name: Docker Image Test
         run: |
