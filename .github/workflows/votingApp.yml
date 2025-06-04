@@ -41,9 +41,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run unit DockerComposeFile
+      - name: Run unit test
         run: |
           pytest repo_voting/test.py
+        if : success()
+      - name: Run tests with coverage
+        run: |
+          coverage report -m
+          
 
   docker:
     name: Containerization
