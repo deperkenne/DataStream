@@ -9,4 +9,4 @@ RUN pip install coverage
 
 COPY . .
 
-CMD ["sh", "-c", "coverage run -m pytest ./repo_voting/test.py && coverage report -m"]
+CMD ["sh", "-c", "coverage run -m pytest ./repo_voting/test.py "]
